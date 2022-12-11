@@ -72,7 +72,7 @@ function Usuarios() {
             info="Lá ele"
             buttonContent="Ver permissão de acesso"
             onClick={() => {
-              navigate('/userpermissions:id');
+              navigate('/singleuser');
             }}
           />
         </Box>

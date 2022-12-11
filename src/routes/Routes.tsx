@@ -8,6 +8,7 @@ import {
   Signin,
   Signup,
   Trancas,
+  SingleUser,
   Usuarios,
 } from '../packages/pages';
 
@@ -27,6 +28,7 @@ function RoutesApp() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/logs" element={<Logs />} />
         <Route path="/trancas" element={<Trancas />} />
+        <Route path="/singleuser" element={<SingleUser />} />
         <Route path="/usuarios" element={<Usuarios />} />
         <Route path="*" element={<Signin />} />
       </Routes>
