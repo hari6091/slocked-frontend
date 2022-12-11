@@ -14,7 +14,7 @@ function SingleUser() {
 
   return (
     <>
-      <title>SLOCKED - HOME</title>
+      <title>SLOCKED - Single User</title>
 
       <Header />
       <Grid container justifyContent="space-between" mt="56px" p="40px">

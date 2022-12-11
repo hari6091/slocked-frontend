@@ -51,7 +51,7 @@ function Trancas() {
             <C.Subtitle>Cadastrar uma nova tranca</C.Subtitle>
             <C.Button
               onClick={() => {
-                navigate('/addlock');
+                navigate('/newlock');
               }}
             >
               <Lock style={{ fontSize: '28px' }} />

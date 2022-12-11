@@ -5,6 +5,7 @@ import { ProtectedLayout } from '../components/ProtectedLayout';
 import {
   Home,
   Logs,
+  NewLock,
   Signin,
   Signup,
   Trancas,
@@ -30,6 +31,7 @@ function RoutesApp() {
         <Route path="/trancas" element={<Trancas />} />
         <Route path="/singleuser" element={<SingleUser />} />
         <Route path="/usuarios" element={<Usuarios />} />
+        <Route path="/newlock" element={<NewLock />} />
         <Route path="*" element={<Signin />} />
       </Routes>
     </BrowserRouter>
