@@ -35,17 +35,10 @@ export function AuthProvider({ children }: IAuthProvider) {
   const signup = async (
     name: string,
     registration: string,
-    sexo: string,
-    email: string,
+    tag: string,
     password: string,
   ) => {
-    const response = await SignupRequest(
-      name,
-      registration,
-      sexo,
-      email,
-      password,
-    );
+    const response = await SignupRequest(name, registration, tag, password);
 
     return response.data;
   };

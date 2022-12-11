@@ -1,42 +1,25 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import {
-  Box,
-  Button,
-  FormControl,
-  FormControlLabel,
-  FormLabel,
-  Grid,
-  Radio,
-  RadioGroup,
-  TextField,
-} from '@mui/material';
+import { ArrowBack, Contactless } from '@material-ui/icons';
+import { Box, Grid, IconButton } from '@mui/material';
 
 import { useAuth } from '../../../hooks/useAuth';
 import * as C from './styles';
 
-const emailRegex = /^[a-z0-9.]+@escolar.ifrn.edu.br/i;
-
 function Signup() {
   const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
+  const [tag, setTag] = useState('');
   const [matricula, setMatricula] = useState('');
   const [senha, setSenha] = useState('');
   const [senhaConf, setSenhaConf] = useState('');
-  const [sexo, setSexo] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
   const { signup } = useAuth();
 
   const handleSignup = async () => {
-    if (!email.match(emailRegex)) {
-      setError('O email precisa ser um email escolar!');
-      return;
-    }
-    if (!name || !email || !matricula || !senha || !sexo) {
+    if (!name || !senha || !tag) {
       setError('Preencha todos os campos');
       return;
     }
@@ -49,19 +32,15 @@ function Signup() {
       return;
     }
     try {
-      await signup(name, matricula, sexo, email, senha);
+      await signup(name, matricula, tag, senha);
 
       // eslint-disable-next-line no-alert
       alert('Usuário cadatrado com sucesso!');
 
-      navigate('/');
+      navigate('/home');
     } catch (err) {
       setError('Algo deu errado');
     }
-  };
-
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSexo((event.target as HTMLInputElement).value);
   };
 
   return (
@@ -72,31 +51,7 @@ function Signup() {
       alignItems="center"
       textAlign="center"
     >
-      <Grid
-        container
-        item
-        xs={12}
-        sm={12}
-        md={5}
-        direction="column"
-        justifyContent="center"
-        alignItems="center"
-        height="100%"
-        bgcolor="#d3d3d3"
-      >
-        <Box maxWidth="400px">
-          <C.Title>BEM-VINDO A SEMADEC</C.Title>
-          <C.Subtitle>DATA_DO_EVENTO</C.Subtitle>
-          <Button
-            variant="contained"
-            onClick={() => {
-              navigate('/');
-            }}
-          >
-            Entrar
-          </Button>
-        </Box>
-      </Grid>
+      <title>SLOCKED - Cadastro</title>
       <Grid
         item
         xs={12}
@@ -108,102 +63,77 @@ function Signup() {
         alignItems="center"
         minWidth="400px"
       >
-        <Box
-          p="20px"
-          gap="15px"
-          borderRadius="5px"
-          boxShadow="0 1px 2px #0003"
-          maxWidth="350px"
-        >
-          <AccountCircleIcon style={{ fontSize: 150 }} />
-          <C.Subtitle>Cadastro</C.Subtitle>
-          <TextField
-            label="Nome"
-            variant="outlined"
-            fullWidth
-            value={name}
-            onChange={(e) => {
-              setName(e.target.value);
-            }}
-            margin="dense"
-          />
-          <TextField
-            label="E-mail escolar"
-            variant="outlined"
-            fullWidth
-            value={email}
-            onChange={(e) => {
-              setEmail(e.target.value);
-            }}
-            margin="dense"
-          />
-          <TextField
-            label="Matricula"
-            variant="outlined"
-            fullWidth
-            value={matricula}
-            onChange={(e) => {
-              setMatricula(e.target.value);
-            }}
-            margin="dense"
-          />
-          <TextField
-            type="password"
-            label="Digite sua senha"
-            variant="outlined"
-            fullWidth
-            value={senha}
-            onChange={(e) => {
-              setSenha(e.target.value);
-            }}
-            margin="dense"
-          />
-          <TextField
-            type="password"
-            label="Confirme sua senha"
-            variant="outlined"
-            fullWidth
-            value={senhaConf}
-            onChange={(e) => {
-              setSenhaConf(e.target.value);
-            }}
-            margin="dense"
-          />
-          <FormControl component="fieldset" fullWidth>
-            <Box textAlign="left" mt="4px">
-              <FormLabel component="legend">Sexo:</FormLabel>
-            </Box>
-            <RadioGroup
-              aria-label="gender"
-              name="gender"
-              value={sexo}
-              onChange={handleChange}
+        <C.BoxCadastro p="20px" boxShadow="0 1px 2px #0003">
+          <Box display="flex" flexDirection="row" justifyContent="start">
+            <IconButton
+              onClick={() => {
+                navigate('/usuarios');
+              }}
             >
-              <Box>
-                <FormControlLabel
-                  value="feminino"
-                  control={<Radio />}
-                  label="Feminino"
-                />
-                <FormControlLabel
-                  value="masculino"
-                  control={<Radio />}
-                  label="Masculino"
+              <ArrowBack style={{ color: 'white', fontSize: '44px' }} />
+            </IconButton>
+          </Box>
+          <C.Title2>Cadastrar Usuário</C.Title2>
+          <Box display="flex" flexDirection="column" gap={2}>
+            <C.labelInput>Nome</C.labelInput>
+            <C.Input
+              onChange={(e) => {
+                setName(e.target.value);
+              }}
+            />
+            <C.labelInput>ID TAG RFID</C.labelInput>
+            <Box
+              display="flex"
+              width="100%"
+              justifyContent="start"
+              alignItems="start"
+            >
+              <Box width="70%">
+                <C.Input
+                  onChange={(e) => {
+                    setTag(e.target.value);
+                  }}
                 />
               </Box>
-            </RadioGroup>
-          </FormControl>
-          <C.labelError>{error}</C.labelError>
-          <Box textAlign="end" width="100%" mt="4px">
-            <Button
-              itemID="cadastrar"
-              variant="contained"
-              onClick={handleSignup}
-            >
-              Cadastrar
-            </Button>
+              <Box
+                display="flex"
+                width="20%"
+                justifyContent="center"
+                alignItems="center"
+              >
+                <C.Button itemID="cadastrarTag">
+                  <Contactless />
+                </C.Button>
+              </Box>
+            </Box>
+            <C.labelInput>Matricula (Não obrigatório)</C.labelInput>
+            <C.Input
+              onChange={(e) => {
+                setMatricula(e.target.value);
+              }}
+            />
+            <C.labelInput>Senha</C.labelInput>
+            <C.Input
+              type="password"
+              onChange={(e) => {
+                setSenha(e.target.value);
+              }}
+            />
+            <C.labelInput>Confirme sua senha</C.labelInput>
+            <C.Input
+              type="password"
+              onChange={(e) => {
+                setSenhaConf(e.target.value);
+              }}
+            />
+            <C.labelError>{error}</C.labelError>
+            <Box textAlign="end" width="100%" mt="4px">
+              <C.Button itemID="cadastrar" onClick={handleSignup}>
+                Confirmar
+              </C.Button>
+            </Box>
           </Box>
-        </Box>
+        </C.BoxCadastro>
       </Grid>
     </Grid>
   );

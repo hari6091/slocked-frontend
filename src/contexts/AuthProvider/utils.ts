@@ -33,16 +33,14 @@ export async function LoginRequest(email: string, password: string) {
 export async function SignupRequest(
   name: string,
   registration: string,
-  sexo: string,
-  email: string,
+  tag: string,
   password: string,
 ) {
   try {
     const request = await api.post('/users/signup', {
       name,
       registration,
-      sexo,
-      email,
+      tag,
       password,
     });
 

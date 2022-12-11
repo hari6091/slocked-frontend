@@ -51,7 +51,7 @@ function Usuarios() {
             <C.Subtitle>Adicionar um novo usuário</C.Subtitle>
             <C.Button
               onClick={() => {
-                navigate('/adduser');
+                navigate('/signup');
               }}
             >
               <PersonAdd style={{ fontSize: '28px' }} />
