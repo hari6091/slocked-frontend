@@ -1,9 +1,9 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import { Box, Button, Grid, Link } from '@mui/material';
+import { Box, Grid } from '@mui/material';
 
+import { Header } from '../../../components';
 import { useAuth } from '../../../hooks/useAuth';
 import * as C from './styles';
 
@@ -12,110 +12,103 @@ function Home() {
   const navigate = useNavigate();
 
   return (
-    <Grid container>
-      <Grid
-        container
-        item
-        xs={12}
-        justifyContent="space-between"
-        alignItems="center"
-        bgcolor="#d3d3d3"
-        border="1px solid #000"
-        borderRadius="12px"
-        flexWrap="wrap"
-        px="12px"
-      >
-        <AccountCircleIcon style={{ fontSize: 100 }} />
+    <>
+      <title>SLOCKED - HOME</title>
 
-        <Box display="flex" justifyContent="space-between" width="50%">
-          <Link
-            itemID="home"
-            href="/home"
-            fontSize="24px"
-            underline="none"
-            color="#000"
-          >
-            Home
-          </Link>
-          <Link
-            itemID="horarios"
-            href="/home"
-            fontSize="24px"
-            underline="none"
-            color="#000"
-          >
-            Horários
-          </Link>
-          <Link
-            itemID="contatos"
-            href="/home"
-            fontSize="24px"
-            underline="none"
-            color="#000"
-          >
-            Contatos
-          </Link>
-        </Box>
-        <Box>
-          <Button
-            itemID="sair"
-            variant="contained"
-            onClick={() => {
-              logout();
-              navigate('/');
-            }}
-          >
-            Sair
-          </Button>
-        </Box>
-      </Grid>
-      <Grid
-        container
-        height="100vh"
-        justifyContent="center"
-        alignItems="center"
-        textAlign="center"
-      >
+      <Header />
+      <Grid container justifyContent="space-between" mt="56px" p="40px">
         <Grid
           container
           item
-          xs={12}
-          sm={12}
-          md={8}
-          p="32px"
+          md={12}
+          lg={5}
           direction="column"
-          justifyContent="space-between"
+          justifyContent="center"
           alignItems="center"
-          bgcolor="#d3d3d3"
-          height="75vh"
-          width="75vh"
-          border="1px solid #000"
-          borderRadius="12px"
         >
-          <Box>
-            <C.Title>BEM-VINDO A SEMADEC</C.Title>
-            <C.Subtitle>DATA_DO_EVENTO</C.Subtitle>
-          </Box>
-          <Box
-            bgcolor="white"
-            width="80%"
-            height="30%"
-            border="1px solid #000"
-            borderRadius="12px"
-          >
-            <C.Subtitle>
-              INFORMAÇÕES SOBRE O EVENTO: <br />
-              “A SEMADEC É A SEMANA ....”
-            </C.Subtitle>
-          </Box>
-          <Box width="100%" textAlign="right">
-            <Button itemID="ver-modalidades" variant="contained" size="large">
-              Ver Modalidades
-            </Button>
-          </Box>
+          <C.CustomBox2 maxWidth="550px">
+            <Box
+              display="flex"
+              flexDirection="column"
+              justifyContent="space-evenly"
+              width="100%"
+              alignItems="center"
+            >
+              <C.Title>Trancas:</C.Title>
+              <Box
+                display="flex"
+                flexDirection="column"
+                width="100%"
+                alignItems="center"
+                gap={2}
+              >
+                <Box display="flex" justifyContent="space-between" width="95%">
+                  <C.Subtitle>Sala</C.Subtitle>
+                  <C.Subtitle>ID</C.Subtitle>
+                </Box>
+                <C.Card>
+                  <C.CardContent>Sala</C.CardContent>
+                  <C.CardContent>ID</C.CardContent>
+                </C.Card>
+              </Box>
+            </Box>
+          </C.CustomBox2>
+        </Grid>
+        <Grid justifyContent="center" alignItems="center" textAlign="center">
+          <Grid item md={12} lg={7}>
+            <C.CustomBox border="1px solid #000">
+              <Box
+                display="flex"
+                flexDirection="row"
+                justifyContent="space-evenly"
+                alignItems="center"
+                width="100%"
+              >
+                <Box textAlign="left" width="50%">
+                  <C.Title>Usuário</C.Title>
+
+                  <C.Subtitle>Cargo/Função:</C.Subtitle>
+                  <C.Content>Professor</C.Content>
+
+                  <C.Subtitle>Ingresso:</C.Subtitle>
+                  <C.Content>DD/MM/AAAA</C.Content>
+
+                  <C.Subtitle>Nome:</C.Subtitle>
+                  <C.Content>Ciclano Fulano Beltrano</C.Content>
+                </Box>
+                <Box
+                  bgcolor="#d9d9d9"
+                  width="360px"
+                  height="360px"
+                  borderRadius="40px"
+                />
+              </Box>
+              <Box width="70%" textAlign="center" display="flex">
+                <Box width="50%" textAlign="start">
+                  <C.Button2
+                    onClick={() => {
+                      navigate('/perfil:id');
+                    }}
+                  >
+                    Ver Perfil
+                  </C.Button2>
+                </Box>
+                <Box width="50%" textAlign="end">
+                  <C.Button
+                    onClick={() => {
+                      logout();
+                      navigate('/');
+                    }}
+                  >
+                    Sair
+                  </C.Button>
+                </Box>
+              </Box>
+            </C.CustomBox>
+          </Grid>
         </Grid>
       </Grid>
-    </Grid>
+    </>
   );
 }
 
