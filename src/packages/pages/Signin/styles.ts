@@ -55,4 +55,8 @@ export const Button = styled.button`
   border: none;
   font: ${({ theme }) => theme.typography.Text};
   color: ${({ theme }) => theme.colors.Neutral0};
+  cursor: pointer;
+  :hover {
+    filter: brightness(90%);
+  }
 `;
