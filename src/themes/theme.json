@@ -3,7 +3,8 @@
         "Primary500": "#2486CE",
         "Primary900": "#28374D",
 
-        "Neutral0": "#ffffff"
+        "Neutral0": "#ffffff",
+        "Neutral500": "#F4F5F3"
     },
     "typography": {
         "Field": {
