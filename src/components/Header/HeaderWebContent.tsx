@@ -18,7 +18,7 @@ function HeaderWebContent() {
       >
         Usuários
       </Link>
-      <Link itemID="contatos" href="/contatos" underline="none" color="#fff">
+      <Link itemID="contatos" href="/trancas" underline="none" color="#fff">
         Trancas
       </Link>
       <Link itemID="contatos" href="/logs" underline="none" color="#fff">

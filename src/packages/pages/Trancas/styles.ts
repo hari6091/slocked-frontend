@@ -2,8 +2,8 @@ import { Grid } from '@mui/material';
 import styled from 'styled-components';
 
 export const Title = styled.h1`
-  color: ${({ theme }) => theme.colors.Neutral0};
   font: ${({ theme }) => theme.typography.Field};
+  color: ${({ theme }) => theme.colors.Neutral0};
 `;
 
 export const Subtitle = styled.p`
