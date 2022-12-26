@@ -11,6 +11,7 @@ import {
   Trancas,
   SingleUser,
   Usuarios,
+  SingleTranca,
 } from '../packages/pages';
 
 function RoutesApp() {
@@ -29,6 +30,7 @@ function RoutesApp() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/logs" element={<Logs />} />
         <Route path="/trancas" element={<Trancas />} />
+        <Route path="/userpermissions" element={<SingleTranca />} />
         <Route path="/singleuser" element={<SingleUser />} />
         <Route path="/usuarios" element={<Usuarios />} />
         <Route path="/newlock" element={<NewLock />} />

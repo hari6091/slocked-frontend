@@ -72,7 +72,7 @@ function Trancas() {
             info="Lá ele"
             buttonContent="Ver usuários com acesso"
             onClick={() => {
-              navigate('/userpermissions:id');
+              navigate('/userpermissions');
             }}
           />
         </Box>

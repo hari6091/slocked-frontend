@@ -8,13 +8,13 @@ import { Header } from '../../../components';
 import { useAuth } from '../../../hooks/useAuth';
 import * as C from './styles';
 
-function SingleUser() {
+function SingleTranca() {
   const { logout } = useAuth();
   const navigate = useNavigate();
 
   return (
     <>
-      <title>SLOCKED - Single User</title>
+      <title>SLOCKED - Single Tranca</title>
 
       <Header />
       <Grid container justifyContent="space-between" mt="56px" p="40px">
@@ -35,7 +35,7 @@ function SingleUser() {
               width="100%"
               alignItems="center"
             >
-              <C.Title>Trancas:</C.Title>
+              <C.Title>Sala ABCDEF</C.Title>
               <Box
                 display="flex"
                 flexDirection="column"
@@ -43,9 +43,14 @@ function SingleUser() {
                 alignItems="center"
                 gap={2}
               >
-                <Box display="flex" gap={15}>
-                  <C.Subtitle>Sala</C.Subtitle>
-                  <C.Subtitle>ID</C.Subtitle>
+                <Box
+                  width="100%"
+                  display="flex"
+                  justifyContent="space-around"
+                  alignItems="center"
+                  gap={15}
+                >
+                  <C.Subtitle>Nome do Usuário</C.Subtitle>
                   <C.Subtitle>Remover</C.Subtitle>
                 </Box>
                 <C.Card>
@@ -54,17 +59,17 @@ function SingleUser() {
                     width="100%"
                     display="flex"
                     alignItems="center"
+                    justifyContent="space-around"
                     gap={15}
                   >
-                    <C.CardContent>C18</C.CardContent>
-                    <C.CardContent>123123123</C.CardContent>
+                    <C.CardContent>Nome do Usuário</C.CardContent>
                     <IconButton>
                       <DeleteForever />
                     </IconButton>
                   </Box>
                 </C.Card>
                 <C.Button>
-                  Adicionar Tranca <AddBox style={{ fontSize: '32px' }} />
+                  Adicionar Usuário <AddBox style={{ fontSize: '32px' }} />
                 </C.Button>
               </Box>
             </Box>
@@ -76,51 +81,32 @@ function SingleUser() {
               <Box
                 display="flex"
                 flexDirection="row"
-                justifyContent="space-evenly"
+                justifyContent="left"
                 alignItems="center"
                 width="100%"
               >
                 <Box textAlign="left" width="50%">
-                  <C.Title>
-                    Usuário
-                    <C.Content>Administrador</C.Content>
-                  </C.Title>
+                  <C.Title>Sala</C.Title>
 
-                  <C.Subtitle>Cargo/Função:</C.Subtitle>
-                  <C.Content>Professor</C.Content>
-
-                  <C.Subtitle>Ingresso:</C.Subtitle>
+                  <C.Subtitle>Cadastrada em:</C.Subtitle>
                   <C.Content>DD/MM/AAAA</C.Content>
 
-                  <C.Subtitle>Nome:</C.Subtitle>
-                  <C.Content>Ciclano Fulano Beltrano</C.Content>
+                  <C.Subtitle>Status:</C.Subtitle>
+                  <C.Content>Fechada</C.Content>
+
+                  <C.Subtitle>Usuários com acesso:</C.Subtitle>
+                  <C.Content>10 funcionários</C.Content>
                 </Box>
-                <Box
-                  bgcolor="#d9d9d9"
-                  width="360px"
-                  height="360px"
-                  borderRadius="40px"
-                />
               </Box>
               <Box width="70%" textAlign="center" display="flex">
-                <Box width="50%" textAlign="start">
+                <Box width="100%" textAlign="start">
                   <C.Button2
                     onClick={() => {
                       navigate('/perfil');
                     }}
                   >
-                    Editar Perfil
+                    Editar Informações
                   </C.Button2>
-                </Box>
-                <Box width="50%" display="flex" justifyContent="end">
-                  <C.Button
-                    onClick={() => {
-                      logout();
-                      navigate('/');
-                    }}
-                  >
-                    Sair
-                  </C.Button>
                 </Box>
               </Box>
             </C.CustomBox>
@@ -131,4 +117,4 @@ function SingleUser() {
   );
 }
 
-export default SingleUser;
+export default SingleTranca;

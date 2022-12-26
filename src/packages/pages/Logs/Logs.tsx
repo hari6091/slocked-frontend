@@ -1,5 +1,4 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 
 import { Box } from '@mui/material';
 
@@ -8,8 +7,6 @@ import { Card } from '../../ui-kit';
 import * as C from './styles';
 
 function Logs() {
-  const navigate = useNavigate();
-
   return (
     <>
       <title>SLOCKED - Logs</title>
@@ -25,13 +22,7 @@ function Logs() {
             flexWrap="wrap"
             justifyContent="center"
           >
-            <Card
-              title="Log 001"
-              buttonContent="Ver Log"
-              onClick={() => {
-                navigate('/verlog');
-              }}
-            />
+            <Card title="Log 001" />
           </Box>
         </Box>
       </C.CustomGrid>

@@ -6,8 +6,8 @@ export interface CardProps {
   title: string;
   subtitle?: string;
   info?: string;
-  buttonContent: string;
-  onClick: () => void;
+  buttonContent?: string;
+  onClick?: () => void;
 }
 
 function Card({ title, subtitle, info, buttonContent, onClick }: CardProps) {
@@ -16,7 +16,9 @@ function Card({ title, subtitle, info, buttonContent, onClick }: CardProps) {
       <Styled.Title>{title}</Styled.Title>
       <Styled.Title>{subtitle}</Styled.Title>
       <Styled.Title>{info}</Styled.Title>
-      <Styled.Button onClick={onClick}>{buttonContent}</Styled.Button>
+      {buttonContent && (
+        <Styled.Button onClick={onClick}>{buttonContent}</Styled.Button>
+      )}
     </Styled.Card>
   );
 }
