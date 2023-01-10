@@ -18,12 +18,13 @@ import * as C from './styles';
 
 function Signup() {
   const [name, setName] = useState('');
-  const [email, setEmail] = useState('user');
-  const [tag, setTag] = useState('');
+  const [email, setEmail] = useState('');
+  const [disciplinaOUcargo, setCargo] = useState('');
+  const [tags, setTag] = useState('');
   const [role, setRole] = useState('user');
   const [matricula, setMatricula] = useState('');
-  const [senha, setSenha] = useState('');
-  const [senhaConf, setSenhaConf] = useState('');
+  const [password, setSenha] = useState('');
+  const [confPassword, setSenhaConf] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
@@ -34,20 +35,29 @@ function Signup() {
   };
 
   const handleSignup = async () => {
-    if (!name || !email || !senha || !tag) {
+    if (!name || !email || !password || !tags || !disciplinaOUcargo) {
       setError('Preencha todos os campos');
       return;
     }
-    if (senha !== senhaConf) {
+    if (password !== confPassword) {
       setError('As senhas não coincidem');
       return;
     }
-    if (senha.length < 4) {
+    if (password.length < 4) {
       setError('A senha tem que ter 4 ou mais caracteres');
       return;
     }
     try {
-      await signup(name, tag, matricula, role, email, senha, senhaConf, role);
+      await signup({
+        name,
+        tags,
+        matricula,
+        disciplinaOUcargo,
+        email,
+        password,
+        confPassword,
+        role,
+      });
 
       // eslint-disable-next-line no-alert
       alert('Usuário cadatrado com sucesso!');
@@ -103,6 +113,14 @@ function Signup() {
                 setEmail(e.target.value);
               }}
             />
+
+            <C.labelInput>Cargo</C.labelInput>
+            <C.Input
+              onChange={(e) => {
+                setCargo(e.target.value);
+              }}
+            />
+
             <C.labelInput>ID TAG RFID</C.labelInput>
             <Box
               display="flex"

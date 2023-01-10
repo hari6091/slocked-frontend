@@ -1,6 +1,6 @@
 import React, { createContext, useEffect, useState } from 'react';
 
-import { IAuthProvider, IContext, IUser } from './types';
+import { IAuthProvider, IContext, IUser, IUserCadastro } from './types';
 import {
   getUserLocalStorage,
   LoginRequest,
@@ -31,17 +31,17 @@ export function AuthProvider({ children }: IAuthProvider) {
   };
 
   // Se cadastra
-  const signup = async (
-    name: string,
-    tags: string,
-    matricula: string,
-    disciplinaOUcargo: string,
-    email: string,
-    password: string,
-    confPassword: string,
-    role: string,
-  ) => {
-    const response = await SignupRequest(
+  const signup = async ({
+    name,
+    tags,
+    matricula,
+    disciplinaOUcargo,
+    email,
+    password,
+    confPassword,
+    role,
+  }: IUserCadastro) => {
+    const response = await SignupRequest({
       name,
       tags,
       matricula,
@@ -50,7 +50,7 @@ export function AuthProvider({ children }: IAuthProvider) {
       password,
       confPassword,
       role,
-    );
+    });
 
     return response.data;
   };
