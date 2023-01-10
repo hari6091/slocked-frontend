@@ -98,3 +98,11 @@ export const Button2 = styled.button`
     filter: brightness(90%);
   }
 `;
+
+export const Input = styled.input`
+  width: 100%;
+  border-radius: 15px;
+  height: 20px;
+  font: ${({ theme }) => theme.typography.Text};
+  padding: 12px;
+`;

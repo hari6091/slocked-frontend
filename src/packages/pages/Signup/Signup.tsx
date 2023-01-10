@@ -2,14 +2,25 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { ArrowBack, Contactless } from '@material-ui/icons';
-import { Box, Grid, IconButton } from '@mui/material';
+import {
+  Box,
+  FormControl,
+  FormControlLabel,
+  FormLabel,
+  Grid,
+  IconButton,
+  Radio,
+  RadioGroup,
+} from '@mui/material';
 
 import { useAuth } from '../../../hooks/useAuth';
 import * as C from './styles';
 
 function Signup() {
   const [name, setName] = useState('');
+  const [email, setEmail] = useState('user');
   const [tag, setTag] = useState('');
+  const [role, setRole] = useState('user');
   const [matricula, setMatricula] = useState('');
   const [senha, setSenha] = useState('');
   const [senhaConf, setSenhaConf] = useState('');
@@ -18,8 +29,12 @@ function Signup() {
 
   const { signup } = useAuth();
 
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setRole((event.target as HTMLInputElement).value);
+  };
+
   const handleSignup = async () => {
-    if (!name || !senha || !tag) {
+    if (!name || !email || !senha || !tag) {
       setError('Preencha todos os campos');
       return;
     }
@@ -32,7 +47,7 @@ function Signup() {
       return;
     }
     try {
-      await signup(name, matricula, tag, senha);
+      await signup(name, tag, matricula, role, email, senha, senhaConf, role);
 
       // eslint-disable-next-line no-alert
       alert('Usuário cadatrado com sucesso!');
@@ -81,6 +96,13 @@ function Signup() {
                 setName(e.target.value);
               }}
             />
+
+            <C.labelInput>Email</C.labelInput>
+            <C.Input
+              onChange={(e) => {
+                setEmail(e.target.value);
+              }}
+            />
             <C.labelInput>ID TAG RFID</C.labelInput>
             <Box
               display="flex"
@@ -126,6 +148,30 @@ function Signup() {
                 setSenhaConf(e.target.value);
               }}
             />
+            <FormControl component="fieldset" fullWidth>
+              <Box textAlign="left" mt="4px">
+                <FormLabel component="legend">Nivel de acesso:</FormLabel>
+              </Box>
+              <RadioGroup
+                aria-label="role"
+                name="role"
+                value={role}
+                onChange={handleChange}
+              >
+                <Box>
+                  <FormControlLabel
+                    value="admin"
+                    control={<Radio />}
+                    label="Administrador"
+                  />
+                  <FormControlLabel
+                    value="user"
+                    control={<Radio />}
+                    label="Usuário"
+                  />
+                </Box>
+              </RadioGroup>
+            </FormControl>
             <C.labelError>{error}</C.labelError>
             <Box textAlign="end" width="100%" mt="4px">
               <C.Button itemID="cadastrar" onClick={handleSignup}>

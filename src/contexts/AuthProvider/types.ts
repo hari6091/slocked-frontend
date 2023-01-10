@@ -8,9 +8,13 @@ export interface IContext extends IUser {
   logout: () => void;
   signup: (
     name: string,
-    registration: string,
-    tag: string,
+    tags: string,
+    matricula: string,
+    disciplinaOUcargo: string,
+    email: string,
     password: string,
+    confPassword: string,
+    role: string,
   ) => Promise<void>;
 }
 

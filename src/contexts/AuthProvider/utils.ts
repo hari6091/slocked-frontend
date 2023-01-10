@@ -21,7 +21,7 @@ export function getUserLocalStorage() {
 // Faz request do login passando email e senha como payload
 export async function LoginRequest(email: string, password: string) {
   try {
-    const request = await api.post('/users/signin', { email, password });
+    const request = await api.post('/login', { email, password });
 
     return request.data;
   } catch {
@@ -29,19 +29,27 @@ export async function LoginRequest(email: string, password: string) {
   }
 }
 
-// Faz request do cadastrp passando nome, email e senha como payload
+// Faz request do cadastro
 export async function SignupRequest(
   name: string,
-  registration: string,
-  tag: string,
+  tags: string,
+  matricula: string,
+  disciplinaOUcargo: string,
+  email: string,
   password: string,
+  confPassword: string,
+  role: string,
 ) {
   try {
-    const request = await api.post('/users/signup', {
+    const request = await api.post('/users', {
       name,
-      registration,
-      tag,
+      tags,
+      matricula,
+      disciplinaOUcargo,
+      email,
       password,
+      confPassword,
+      role,
     });
 
     return request.data;

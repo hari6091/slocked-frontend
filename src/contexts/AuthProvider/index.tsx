@@ -25,7 +25,7 @@ export function AuthProvider({ children }: IAuthProvider) {
   // Faz login
   const authenticate = async (email: string, password: string) => {
     const response = await LoginRequest(email, password);
-    const payload = { token: response.jwtToken, email };
+    const payload = { token: response.uuid, email };
 
     setUser(payload);
     setUserLocalStorage(payload);
@@ -34,11 +34,24 @@ export function AuthProvider({ children }: IAuthProvider) {
   // Se cadastra
   const signup = async (
     name: string,
-    registration: string,
-    tag: string,
+    tags: string,
+    matricula: string,
+    disciplinaOUcargo: string,
+    email: string,
     password: string,
+    confPassword: string,
+    role: string,
   ) => {
-    const response = await SignupRequest(name, registration, tag, password);
+    const response = await SignupRequest(
+      name,
+      tags,
+      matricula,
+      disciplinaOUcargo,
+      email,
+      password,
+      confPassword,
+      role,
+    );
 
     return response.data;
   };

@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { AddBox, DeleteForever } from '@material-ui/icons';
-import { Box, Grid, IconButton } from '@mui/material';
+import { AddBox, DeleteForever, Search } from '@material-ui/icons';
+import { Box, Grid, IconButton, Modal, Typography } from '@mui/material';
 
 import { Header } from '../../../components';
 import { useAuth } from '../../../hooks/useAuth';
@@ -11,6 +11,20 @@ import * as C from './styles';
 function SingleUser() {
   const { logout } = useAuth();
   const navigate = useNavigate();
+
+  const [open, setOpen] = useState(false);
+
+  const style = {
+    position: 'absolute' as const,
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 400,
+    bgcolor: 'background.paper',
+    border: '2px solid #000',
+    boxShadow: 24,
+    p: 4,
+  };
 
   return (
     <>
@@ -63,9 +77,30 @@ function SingleUser() {
                     </IconButton>
                   </Box>
                 </C.Card>
-                <C.Button>
-                  Adicionar Tranca <AddBox style={{ fontSize: '32px' }} />
-                </C.Button>
+                <Box
+                  width="100%"
+                  display="flex"
+                  justifyContent="space-around"
+                  gap={5}
+                >
+                  <C.Button
+                    onClick={() => {
+                      setOpen(true);
+                    }}
+                  >
+                    <Box display="flex" alignItems="center" gap={2}>
+                      Add Tranca <AddBox style={{ fontSize: '32px' }} />
+                    </Box>
+                  </C.Button>
+                  <C.Button
+                    onClick={() => {
+                      setOpen(true);
+                    }}
+                  >
+                    Add Grupo de Trancas
+                    <AddBox style={{ fontSize: '32px' }} />
+                  </C.Button>
+                </Box>
               </Box>
             </Box>
           </C.CustomBox2>
@@ -127,6 +162,54 @@ function SingleUser() {
           </Grid>
         </Grid>
       </Grid>
+      <Modal
+        open={open}
+        onClose={() => {
+          setOpen(false);
+        }}
+      >
+        <Box sx={style}>
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+            Buscar Sala:
+          </Typography>
+          <Box display="flex" flexDirection="column">
+            <Box display="flex" flexDirection="row" alignItems="center" gap={1}>
+              <C.Input />
+              <C.Button>
+                <Search style={{ padding: '8px' }} />
+              </C.Button>
+            </Box>
+          </Box>
+          <Box display="flex" flexDirection="column">
+            <Box
+              display="flex"
+              justifyContent="space-around"
+              alignItems="center"
+            >
+              <Typography variant="subtitle1" component="h3">
+                Sala 123456
+              </Typography>
+
+              <IconButton>
+                <AddBox style={{ fontSize: '32px' }} />
+              </IconButton>
+            </Box>
+            <Box
+              display="flex"
+              justifyContent="space-around"
+              alignItems="center"
+            >
+              <Typography variant="subtitle1" component="h3">
+                Sala ABCDEF
+              </Typography>
+
+              <IconButton>
+                <AddBox style={{ fontSize: '32px' }} />
+              </IconButton>
+            </Box>
+          </Box>
+        </Box>
+      </Modal>
     </>
   );
 }
