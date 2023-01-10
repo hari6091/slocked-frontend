@@ -19,13 +19,12 @@ export function AuthProvider({ children }: IAuthProvider) {
     if (users) {
       setUser(users);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Faz login
   const authenticate = async (email: string, password: string) => {
     const response = await LoginRequest(email, password);
-    const payload = { token: response.uuid, email };
+    const payload = { token: response.accessToken, email };
 
     setUser(payload);
     setUserLocalStorage(payload);
