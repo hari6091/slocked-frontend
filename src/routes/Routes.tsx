@@ -30,8 +30,8 @@ function RoutesApp() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/logs" element={<Logs />} />
         <Route path="/trancas" element={<Trancas />} />
-        <Route path="/userpermissions" element={<SingleTranca />} />
-        <Route path="/singleuser" element={<SingleUser />} />
+        <Route path="/userpermissions/:id" element={<SingleTranca />} />
+        <Route path="/singleuser/:id" element={<SingleUser />} />
         <Route path="/usuarios" element={<Usuarios />} />
         <Route path="/newlock" element={<NewLock />} />
         <Route path="*" element={<Signin />} />

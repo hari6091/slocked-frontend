@@ -1,16 +1,32 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { PersonAdd, Search } from '@material-ui/icons';
 import { Box } from '@mui/material';
 
 import { Header } from '../../../components';
+import useProfile, { MyUser } from '../../../hooks/useProfile';
 import { Card } from '../../ui-kit';
 import * as C from './styles';
 
 function Usuarios() {
   const navigate = useNavigate();
 
+  const { users } = useProfile();
+
+  const [filter, setFilter] = useState<string>();
+
+  const card = (user: MyUser) => (
+    <Card
+      title={`Nome: ${user.name}`}
+      subtitle={`Email: ${user.email} Acesso: ${user.role}`}
+      info={`Cargo: ${user.disciplinaOUcargo}`}
+      buttonContent="Ver acessos"
+      onClick={() => {
+        navigate(`/singleuser/${user.uuid}`);
+      }}
+    />
+  );
   return (
     <>
       <title>SLOCKED - Usuários</title>
@@ -26,14 +42,14 @@ function Usuarios() {
         >
           <Box width="40%">
             <Box display="flex" flexDirection="column">
-              <C.Subtitle>Pesquisar usuário por nome ou matricula</C.Subtitle>
+              <C.Subtitle>Pesquisar usuário pelo nome</C.Subtitle>
               <Box
                 display="flex"
                 flexDirection="row"
                 alignItems="center"
                 gap={1}
               >
-                <C.Input />
+                <C.Input onChange={(e) => setFilter(e.target.value)} />
                 <C.Button>
                   <Search style={{ padding: '8px' }} />
                 </C.Button>
@@ -66,15 +82,17 @@ function Usuarios() {
           flexWrap="wrap"
           justifyContent="center"
         >
-          <Card
-            title="Username"
-            subtitle="0000000"
-            info="Lá ele"
-            buttonContent="Ver permissão de acesso"
-            onClick={() => {
-              navigate('/singleuser');
-            }}
-          />
+          {filter
+            ? users
+                ?.filter((user) => {
+                  return user.name === filter;
+                })
+                .map((user) => {
+                  return card(user);
+                })
+            : users?.map((user) => {
+                return card(user);
+              })}
         </Box>
       </C.CustomGrid>
     </>

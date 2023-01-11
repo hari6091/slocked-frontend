@@ -5,11 +5,23 @@ import { Box, Grid } from '@mui/material';
 
 import { Header } from '../../../components';
 import { useAuth } from '../../../hooks/useAuth';
+import useProfile from '../../../hooks/useProfile';
 import * as C from './styles';
 
 function Home() {
   const { logout } = useAuth();
+  const { profile } = useProfile();
   const navigate = useNavigate();
+
+  function dataCadastro() {
+    const data = new Date(profile?.createdAt ?? '');
+    const dia = data.getDate().toString();
+    const diaF = dia.length === 1 ? `0${dia}` : dia;
+    const mes = (data.getMonth() + 1).toString();
+    const mesF = mes.length === 1 ? `0${mes}` : mes;
+    const anoF = data.getFullYear();
+    return `${diaF}/${mesF}/${anoF}`;
+  }
 
   return (
     <>
@@ -68,13 +80,15 @@ function Home() {
                   <C.Title>Usuário</C.Title>
 
                   <C.Subtitle>Cargo/Função:</C.Subtitle>
-                  <C.Content>Professor</C.Content>
+                  <C.Content>
+                    {profile?.disciplinaOUcargo} - {profile?.role}
+                  </C.Content>
 
-                  <C.Subtitle>Ingresso:</C.Subtitle>
-                  <C.Content>DD/MM/AAAA</C.Content>
+                  <C.Subtitle>Ingresso no sistema:</C.Subtitle>
+                  <C.Content>{dataCadastro()}</C.Content>
 
                   <C.Subtitle>Nome:</C.Subtitle>
-                  <C.Content>Ciclano Fulano Beltrano</C.Content>
+                  <C.Content>{profile?.name}</C.Content>
                 </Box>
                 <Box
                   bgcolor="#d9d9d9"

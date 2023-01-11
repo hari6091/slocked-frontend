@@ -5,11 +5,14 @@ import { Lock, Search } from '@material-ui/icons';
 import { Box } from '@mui/material';
 
 import { Header } from '../../../components';
+import useSalas from '../../../hooks/useSalas';
 import { Card } from '../../ui-kit';
 import * as C from './styles';
 
 function Trancas() {
   const navigate = useNavigate();
+
+  const { salas } = useSalas();
 
   return (
     <>
@@ -66,15 +69,18 @@ function Trancas() {
           flexWrap="wrap"
           justifyContent="center"
         >
-          <Card
-            title="Sala x"
-            subtitle="0000000"
-            info="Lá ele"
-            buttonContent="Ver usuários com acesso"
-            onClick={() => {
-              navigate('/userpermissions');
-            }}
-          />
+          {salas?.map((sala) => {
+            return (
+              <Card
+                title={sala.name}
+                subtitle={sala.numero}
+                buttonContent="Ver usuários com acesso"
+                onClick={() => {
+                  navigate(`/userpermissions/${sala.id}`);
+                }}
+              />
+            );
+          })}
         </Box>
       </C.CustomGrid>
     </>

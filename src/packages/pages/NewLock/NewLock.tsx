@@ -4,25 +4,27 @@ import { useNavigate } from 'react-router-dom';
 import { ArrowBack } from '@material-ui/icons';
 import { Box, Grid, IconButton } from '@mui/material';
 
+import useSalas from '../../../hooks/useSalas';
 import * as C from './styles';
 
 function NewLock() {
+  const { createSala } = useSalas();
+
   const [name, setName] = useState('');
-  const [info, setInfo] = useState('');
-  const [id, setId] = useState('');
+  const [numero, setNumero] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
   const handleCadastrar = async () => {
-    if (!name || !id) {
+    if (!name || !numero) {
       setError('Preencha todos os campos');
       return;
     }
     try {
-      // await cadastro(name, id,info);
+      await createSala({ name, numero });
 
       // eslint-disable-next-line no-alert
-      alert('Usuário cadatrado com sucesso!');
+      alert('Sala cadastrada com sucesso!');
 
       navigate('/trancas');
     } catch (err) {
@@ -71,13 +73,7 @@ function NewLock() {
             <C.labelInput>Identificação da sala</C.labelInput>
             <C.Input
               onChange={(e) => {
-                setId(e.target.value);
-              }}
-            />
-            <C.labelInput>Outras informações</C.labelInput>
-            <C.Input
-              onChange={(e) => {
-                setInfo(e.target.value);
+                setNumero(e.target.value);
               }}
             />
             <C.labelError>{error}</C.labelError>
