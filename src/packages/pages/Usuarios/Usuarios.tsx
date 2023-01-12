@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { PersonAdd, Search } from '@material-ui/icons';
@@ -16,15 +16,16 @@ function Usuarios() {
 
   const [filter, setFilter] = useState<string>();
 
-  const lowerFilter = filter?.toLowerCase();
-
-  const usersFiltrados = filter
-    ? users?.filter(
-        (user) =>
-          user.name.toLowerCase().includes(lowerFilter ?? '') ||
-          user.email.toLowerCase().includes(lowerFilter ?? ''),
-      )
-    : users;
+  const usersFiltrados = useMemo(() => {
+    const lowerFilter = filter?.toLowerCase();
+    return filter
+      ? users?.filter(
+          (user) =>
+            user.name.toLowerCase().includes(lowerFilter ?? '') ||
+            user.email.toLowerCase().includes(lowerFilter ?? ''),
+        )
+      : users;
+  }, [filter, users]);
 
   const card = (user: MyUser) => (
     <Card
