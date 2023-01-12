@@ -1,18 +1,18 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
 
 import { ArrowBack, Contactless } from '@material-ui/icons';
 import {
   Box,
   FormControl,
-  FormControlLabel,
-  FormLabel,
   Grid,
   IconButton,
   Radio,
   RadioGroup,
 } from '@mui/material';
 
+import 'react-toastify/dist/ReactToastify.css';
 import { useAuth } from '../../../hooks/useAuth';
 import * as C from './styles';
 
@@ -58,11 +58,16 @@ function Signup() {
         confPassword,
         role,
       });
-
-      // eslint-disable-next-line no-alert
-      alert('Usuário cadatrado com sucesso!');
-
-      navigate('/home');
+      toast.success('Usuário cadastrado com sucesso!', {
+        position: 'top-center',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: false,
+        progress: undefined,
+        theme: 'colored',
+      });
     } catch (err) {
       setError('Algo deu errado');
     }
@@ -77,6 +82,18 @@ function Signup() {
       textAlign="center"
     >
       <title>SLOCKED - Cadastro</title>
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable={false}
+        pauseOnHover
+        theme="colored"
+      />
       <Grid
         item
         xs={12}
@@ -146,7 +163,7 @@ function Signup() {
                 </C.Button>
               </Box>
             </Box>
-            <C.labelInput>Matricula (Não obrigatório)</C.labelInput>
+            <C.labelInput>Matricula (Opcional)</C.labelInput>
             <C.Input
               onChange={(e) => {
                 setMatricula(e.target.value);
@@ -168,7 +185,7 @@ function Signup() {
             />
             <FormControl component="fieldset" fullWidth>
               <Box textAlign="left" mt="4px">
-                <FormLabel component="legend">Nivel de acesso:</FormLabel>
+                <C.labelInput>Nivel de acesso:</C.labelInput>
               </Box>
               <RadioGroup
                 aria-label="role"
@@ -176,17 +193,21 @@ function Signup() {
                 value={role}
                 onChange={handleChange}
               >
-                <Box>
-                  <FormControlLabel
-                    value="admin"
-                    control={<Radio />}
-                    label="Administrador"
-                  />
-                  <FormControlLabel
-                    value="user"
-                    control={<Radio />}
-                    label="Usuário"
-                  />
+                <Box
+                  width="100%"
+                  display="flex"
+                  justifyContent="space-around"
+                  alignItems="center"
+                  mt="12px"
+                >
+                  <Box display="flex" alignItems="center">
+                    <Radio value="admin" />
+                    <C.labelInput>Administrador</C.labelInput>
+                  </Box>
+                  <Box display="flex" alignItems="center">
+                    <Radio value="user" />
+                    <C.labelInput>Usuário</C.labelInput>
+                  </Box>
                 </Box>
               </RadioGroup>
             </FormControl>
