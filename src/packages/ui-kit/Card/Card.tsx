@@ -29,7 +29,7 @@ function Card({
       <Styled.Title>{subtitle}</Styled.Title>
       {isPorta ? (
         <Box
-          width="40%"
+          width="50%"
           display="flex"
           alignItems="center"
           justifyContent="space-between"
