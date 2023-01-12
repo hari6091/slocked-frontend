@@ -12,7 +12,7 @@ import * as C from './styles';
 
 function SingleUser() {
   const { logout } = useAuth();
-  const { getSingleUser } = useProfile();
+  const { getSingleUser, deleteUser } = useProfile();
   const navigate = useNavigate();
 
   const [user, setUser] = useState<MyUser>();
@@ -29,7 +29,13 @@ function SingleUser() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const handleDeleteUser = async () => {
+    await deleteUser(id);
+    navigate('/usuarios');
+  };
+
   const [open, setOpen] = useState(false);
+  const [openDelete, setOpenDelete] = useState(false);
 
   const style = {
     position: 'absolute' as const,
@@ -135,11 +141,8 @@ function SingleUser() {
                 <Box textAlign="left" width="50%">
                   <C.Title>
                     Usuário
-                    <C.Content>
-                      {user?.role === 'admin'
-                        ? 'Administrador'
-                        : 'Usuário comum' ?? 'Carregando...'}
-                    </C.Content>
+                    <C.Subtitle>Nome:</C.Subtitle>
+                    <C.Content>{user?.name ?? 'Carregando...'}</C.Content>
                   </C.Title>
 
                   <C.Subtitle>Cargo/Função:</C.Subtitle>
@@ -150,8 +153,11 @@ function SingleUser() {
                   <C.Subtitle>Ingresso:</C.Subtitle>
                   <C.Content>{dataCadastro(user?.createdAt)}</C.Content>
 
-                  <C.Subtitle>Nome:</C.Subtitle>
-                  <C.Content>{user?.name ?? 'Carregando...'}</C.Content>
+                  <C.Content>
+                    {user?.role === 'admin'
+                      ? 'Administrador'
+                      : 'Usuário comum' ?? 'Carregando...'}
+                  </C.Content>
                 </Box>
                 <Box
                   bgcolor="#d9d9d9"
@@ -160,8 +166,8 @@ function SingleUser() {
                   borderRadius="40px"
                 />
               </Box>
-              <Box width="70%" textAlign="center" display="flex">
-                <Box width="50%" textAlign="start">
+              <Box width="100%" textAlign="center" display="flex" gap={5}>
+                <Box width="30%" textAlign="start">
                   <C.Button2
                     onClick={() => {
                       navigate('/perfil');
@@ -170,7 +176,7 @@ function SingleUser() {
                     Editar Perfil
                   </C.Button2>
                 </Box>
-                <Box width="50%" display="flex" justifyContent="end">
+                <Box width="30%" textAlign="start">
                   <C.Button
                     onClick={() => {
                       logout();
@@ -179,6 +185,15 @@ function SingleUser() {
                   >
                     Sair
                   </C.Button>
+                </Box>
+                <Box width="33%" display="flex" justifyContent="end">
+                  <C.Button2
+                    onClick={() => {
+                      setOpenDelete(true);
+                    }}
+                  >
+                    Deletar Usuário
+                  </C.Button2>
                 </Box>
               </Box>
             </C.CustomBox>
@@ -230,6 +245,41 @@ function SingleUser() {
                 <AddBox style={{ fontSize: '32px' }} />
               </IconButton>
             </Box>
+          </Box>
+        </Box>
+      </Modal>
+      <Modal
+        open={openDelete}
+        onClose={() => {
+          setOpenDelete(false);
+        }}
+      >
+        <Box sx={style}>
+          <Typography
+            id="modal-modal-title"
+            variant="h6"
+            component="h2"
+            textAlign="center"
+          >
+            Tem certeza que quer deletar esse usuário? Está ação não pode ser
+            desfeita e TODOS os dados serão perdido para SEMPRE.
+          </Typography>
+          <Box
+            display="flex"
+            flexDirection="row"
+            alignItems="center"
+            justifyContent="center"
+            gap={1}
+            mt="12px"
+          >
+            <C.Button2
+              onClick={() => {
+                setOpenDelete(false);
+              }}
+            >
+              Cancelar
+            </C.Button2>
+            <C.Button onClick={handleDeleteUser}>Sim, quero deletar.</C.Button>
           </Box>
         </Box>
       </Modal>

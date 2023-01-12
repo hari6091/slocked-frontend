@@ -4,6 +4,7 @@ import { IAuthProvider, IContext, IUser, IUserCadastro } from './types';
 import {
   getUserLocalStorage,
   LoginRequest,
+  LogoutRequest,
   setUserLocalStorage,
   SignupRequest,
 } from './utils';
@@ -24,7 +25,12 @@ export function AuthProvider({ children }: IAuthProvider) {
   // Faz login
   const authenticate = async (email: string, password: string) => {
     const response = await LoginRequest(email, password);
-    const payload = { token: response.uuid, email, role: response.role };
+    const payload = {
+      token: response.uuid,
+      email,
+      password,
+      role: response.role,
+    };
 
     setUser(payload);
     setUserLocalStorage(payload);
@@ -56,7 +62,12 @@ export function AuthProvider({ children }: IAuthProvider) {
   };
 
   // Faz logout
-  const logout = () => {
+  const logout = async () => {
+    const usuario = getUserLocalStorage();
+
+    const { email, password } = usuario;
+
+    await LogoutRequest(email, password);
     setUser(null);
     setUserLocalStorage(null);
   };

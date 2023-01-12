@@ -4,6 +4,7 @@ import api from '../services/api';
 
 export interface MyUser {
   uuid?: string;
+  id?: string;
   name: string;
   email: string;
   disciplinaOUcargo: string;
@@ -32,12 +33,17 @@ function useProfile() {
     return request.data;
   }
 
+  async function deleteUser(id: string | undefined) {
+    const request = await api.delete(`users/${id}`);
+    return request.data;
+  }
+
   useEffect(() => {
     getUSer();
     allSalas();
   }, []);
 
-  return { profile, users, getSingleUser };
+  return { profile, users, getSingleUser, deleteUser };
 }
 
 export default useProfile;

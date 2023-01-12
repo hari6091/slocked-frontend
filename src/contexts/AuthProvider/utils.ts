@@ -29,6 +29,15 @@ export async function LoginRequest(email: string, password: string) {
   }
 }
 
+export async function LogoutRequest(email: string, password: string) {
+  try {
+    const request = await api.delete('/logout', { data: { email, password } });
+    return request.data;
+  } catch {
+    return null;
+  }
+}
+
 // Faz request do cadastro
 export async function SignupRequest({
   name,
