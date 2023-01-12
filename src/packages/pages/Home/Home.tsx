@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import { Box, Grid } from '@mui/material';
 
 import { Header } from '../../../components';
@@ -46,7 +47,7 @@ function Home() {
               width="100%"
               alignItems="center"
             >
-              <C.Title>Trancas:</C.Title>
+              <C.Title>Meus Acessos:</C.Title>
               <Box
                 display="flex"
                 flexDirection="column"
@@ -77,9 +78,9 @@ function Home() {
                 width="100%"
               >
                 <Box textAlign="left" width="50%">
-                  <C.Title>Usuário</C.Title>
+                  <C.Title>Meu Usuário</C.Title>
 
-                  <C.Subtitle>Cargo/Função:</C.Subtitle>
+                  <C.Subtitle>Cargo - Nível de acesso:</C.Subtitle>
                   <C.Content>
                     {profile?.disciplinaOUcargo} - {profile?.role}
                   </C.Content>
@@ -90,33 +91,25 @@ function Home() {
                   <C.Subtitle>Nome:</C.Subtitle>
                   <C.Content>{profile?.name}</C.Content>
                 </Box>
-                <Box
-                  bgcolor="#d9d9d9"
-                  width="360px"
-                  height="360px"
-                  borderRadius="40px"
-                />
+                <Box>
+                  <AccountCircleIcon
+                    style={{
+                      width: '360px',
+                      height: '360px',
+                      color: '#d9d9d9',
+                    }}
+                  />
+                </Box>
               </Box>
-              <Box width="70%" textAlign="center" display="flex">
-                <Box width="50%" textAlign="start">
-                  <C.Button2
-                    onClick={() => {
-                      navigate('/perfil:id');
-                    }}
-                  >
-                    Ver Perfil
-                  </C.Button2>
-                </Box>
-                <Box width="50%" textAlign="end">
-                  <C.Button
-                    onClick={() => {
-                      logout();
-                      navigate('/');
-                    }}
-                  >
-                    Sair
-                  </C.Button>
-                </Box>
+              <Box width="75%" textAlign="end">
+                <C.Button
+                  onClick={() => {
+                    logout();
+                    navigate('/');
+                  }}
+                >
+                  Sair
+                </C.Button>
               </Box>
             </C.CustomBox>
           </Grid>

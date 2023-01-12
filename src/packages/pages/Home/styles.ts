@@ -69,7 +69,7 @@ export const CustomBox2 = styled(Box)`
 `;
 
 export const Button = styled.button`
-  width: 50%;
+  width: 25%;
   height: 48px;
   border-radius: 15px;
   background-color: ${({ theme }) => theme.colors.Primary500};
