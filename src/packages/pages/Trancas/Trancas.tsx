@@ -90,7 +90,7 @@ function Trancas() {
             return (
               <Card
                 title={sala.name}
-                subtitle={sala.numero}
+                subtitle={sala.numero.toUpperCase()}
                 acesso={sala.status?.toUpperCase()}
                 buttonContent="Ver usuários com acesso"
                 onClick={() => {

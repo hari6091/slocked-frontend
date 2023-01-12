@@ -15,7 +15,7 @@ function useSalas() {
       const request = await api.post('/salas', {
         name,
         numero,
-        status: 'fechada',
+        status: 'inativo',
       });
 
       return request.data;

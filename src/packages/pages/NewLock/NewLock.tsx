@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
 
 import { ArrowBack } from '@material-ui/icons';
 import { Box, Grid, IconButton } from '@mui/material';
 
 import useSalas from '../../../hooks/useSalas';
 import * as C from './styles';
+import 'react-toastify/dist/ReactToastify.css';
 
 function NewLock() {
   const { createSala } = useSalas();
@@ -23,10 +25,16 @@ function NewLock() {
     try {
       await createSala({ name, numero });
 
-      // eslint-disable-next-line no-alert
-      alert('Sala cadastrada com sucesso!');
-
-      navigate('/trancas');
+      toast.success('Sala cadastrada com sucesso!', {
+        position: 'top-center',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: false,
+        progress: undefined,
+        theme: 'colored',
+      });
     } catch (err) {
       setError('Algo deu errado');
     }
@@ -40,6 +48,18 @@ function NewLock() {
       alignItems="center"
       textAlign="center"
     >
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable={false}
+        pauseOnHover
+        theme="colored"
+      />
       <title>SLOCKED - Cadastro</title>
       <Grid
         item
@@ -71,7 +91,7 @@ function NewLock() {
               }}
             />
             <C.labelInput>Identificação da sala</C.labelInput>
-            <C.Input
+            <C.InputSala
               onChange={(e) => {
                 setNumero(e.target.value);
               }}

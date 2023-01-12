@@ -41,6 +41,16 @@ export const Input = styled.input`
   padding: 12px;
 `;
 
+export const InputSala = styled.input`
+  display: flex;
+  border-radius: 30px;
+  border: none;
+  height: 32px;
+  font: ${({ theme }) => theme.typography.Text};
+  padding: 12px;
+  text-transform: uppercase;
+`;
+
 export const labelInput = styled.label`
   font: ${({ theme }) => theme.typography.Text};
   font-size: 28px;
