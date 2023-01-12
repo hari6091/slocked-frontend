@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import api from '../services/api';
 
 interface ISala {
-  id?: string;
+  uuid?: string;
   name: string;
   numero: string;
 }
@@ -15,7 +15,6 @@ function useSalas() {
         name,
         numero,
         status: 'fechada',
-        userId: 'id',
       });
 
       return request.data;

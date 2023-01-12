@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { Lock, Search } from '@material-ui/icons';
@@ -13,6 +13,19 @@ function Trancas() {
   const navigate = useNavigate();
 
   const { salas } = useSalas();
+
+  const [filter, setFilter] = useState<string>();
+
+  const salasFiltradas = useMemo(() => {
+    const lowerFilter = filter?.toLowerCase();
+    return filter
+      ? salas?.filter(
+          (sala) =>
+            sala.name.toLowerCase().includes(lowerFilter ?? '') ||
+            sala.numero.toLowerCase().includes(lowerFilter ?? ''),
+        )
+      : salas;
+  }, [filter, salas]);
 
   return (
     <>
@@ -29,14 +42,18 @@ function Trancas() {
         >
           <Box width="40%">
             <Box display="flex" flexDirection="column">
-              <C.Subtitle>Pesquisar tranca por sala ou id</C.Subtitle>
+              <C.Subtitle>Pesquisar sala por nome ou número</C.Subtitle>
               <Box
                 display="flex"
                 flexDirection="row"
                 alignItems="center"
                 gap={1}
               >
-                <C.Input />
+                <C.Input
+                  onChange={(e) => {
+                    setFilter(e.target.value);
+                  }}
+                />
                 <C.Button>
                   <Search style={{ padding: '8px' }} />
                 </C.Button>
@@ -69,14 +86,14 @@ function Trancas() {
           flexWrap="wrap"
           justifyContent="center"
         >
-          {salas?.map((sala) => {
+          {salasFiltradas?.map((sala) => {
             return (
               <Card
                 title={sala.name}
                 subtitle={sala.numero}
                 buttonContent="Ver usuários com acesso"
                 onClick={() => {
-                  navigate(`/userpermissions/${sala.id}`);
+                  navigate(`/userpermissions/${sala.uuid}`);
                 }}
               />
             );
