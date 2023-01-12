@@ -21,7 +21,7 @@ export function dataCadastro(param: string | undefined) {
 
 function Home() {
   const { logout } = useAuth();
-  const { profile } = useProfile();
+  const { profile, salas } = useProfile();
   const navigate = useNavigate();
 
   return (
@@ -59,10 +59,19 @@ function Home() {
                   <C.Subtitle>Sala</C.Subtitle>
                   <C.Subtitle>ID</C.Subtitle>
                 </Box>
-                <C.Card>
-                  <C.CardContent>Sala</C.CardContent>
-                  <C.CardContent>ID</C.CardContent>
-                </C.Card>
+
+                {salas?.map((sala) => {
+                  return (
+                    <C.Card>
+                      <C.CardContent>
+                        {sala?.name ?? 'Carregando...'}
+                      </C.CardContent>
+                      <C.CardContent>
+                        {sala?.numero ?? 'Carregando...'}
+                      </C.CardContent>
+                    </C.Card>
+                  );
+                })}
               </Box>
             </Box>
           </C.CustomBox2>

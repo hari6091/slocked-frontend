@@ -12,6 +12,14 @@ export interface MyUser {
   createdAt: string;
 }
 
+export interface MyUserSalas {
+  uuid?: string;
+  name: string;
+  numero: string;
+  status: string;
+  users: MyUser[];
+}
+
 function useProfile() {
   const [profile, setProfile] = useState<MyUser>();
 
@@ -38,12 +46,20 @@ function useProfile() {
     return request.data;
   }
 
+  const [salas, setSalas] = useState<MyUserSalas[]>();
+  async function userSalas() {
+    await api.get('salas').then((response) => {
+      setSalas(response.data);
+    });
+  }
+
   useEffect(() => {
     getUSer();
     allSalas();
+    userSalas();
   }, []);
 
-  return { profile, users, getSingleUser, deleteUser };
+  return { profile, users, getSingleUser, deleteUser, salas };
 }
 
 export default useProfile;
