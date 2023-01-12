@@ -91,6 +91,7 @@ function Trancas() {
               <Card
                 title={sala.name}
                 subtitle={sala.numero}
+                acesso={sala.status?.toUpperCase()}
                 buttonContent="Ver usuários com acesso"
                 onClick={() => {
                   navigate(`/userpermissions/${sala.uuid}`);

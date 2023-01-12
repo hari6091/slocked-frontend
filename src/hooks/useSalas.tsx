@@ -6,6 +6,7 @@ interface ISala {
   uuid?: string;
   name: string;
   numero: string;
+  status?: string;
 }
 
 function useSalas() {
