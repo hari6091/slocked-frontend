@@ -27,12 +27,17 @@ function useProfile() {
     });
   }
 
+  async function getSingleUser(id: string | undefined): Promise<MyUser> {
+    const request = await api.get(`users/${id}`);
+    return request.data;
+  }
+
   useEffect(() => {
     getUSer();
     allSalas();
   }, []);
 
-  return { profile, users };
+  return { profile, users, getSingleUser };
 }
 
 export default useProfile;

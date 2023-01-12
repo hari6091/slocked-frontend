@@ -9,20 +9,20 @@ import { useAuth } from '../../../hooks/useAuth';
 import useProfile from '../../../hooks/useProfile';
 import * as C from './styles';
 
+export function dataCadastro(param: string | undefined) {
+  const data = new Date(param ?? '');
+  const dia = data.getDate().toString();
+  const diaF = dia.length === 1 ? `0${dia}` : dia;
+  const mes = (data.getMonth() + 1).toString();
+  const mesF = mes.length === 1 ? `0${mes}` : mes;
+  const anoF = data.getFullYear();
+  return `${diaF}/${mesF}/${anoF}`;
+}
+
 function Home() {
   const { logout } = useAuth();
   const { profile } = useProfile();
   const navigate = useNavigate();
-
-  function dataCadastro() {
-    const data = new Date(profile?.createdAt ?? '');
-    const dia = data.getDate().toString();
-    const diaF = dia.length === 1 ? `0${dia}` : dia;
-    const mes = (data.getMonth() + 1).toString();
-    const mesF = mes.length === 1 ? `0${mes}` : mes;
-    const anoF = data.getFullYear();
-    return `${diaF}/${mesF}/${anoF}`;
-  }
 
   return (
     <>
@@ -82,11 +82,14 @@ function Home() {
 
                   <C.Subtitle>Cargo - Nível de acesso:</C.Subtitle>
                   <C.Content>
-                    {profile?.disciplinaOUcargo} - {profile?.role}
+                    {profile?.disciplinaOUcargo} - {}
+                    {profile?.role === 'admin'
+                      ? 'Administrador'
+                      : 'Usuário comum'}
                   </C.Content>
 
                   <C.Subtitle>Ingresso no sistema:</C.Subtitle>
-                  <C.Content>{dataCadastro()}</C.Content>
+                  <C.Content>{dataCadastro(profile?.createdAt)}</C.Content>
 
                   <C.Subtitle>Nome:</C.Subtitle>
                   <C.Content>{profile?.name}</C.Content>

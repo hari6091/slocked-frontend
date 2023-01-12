@@ -1,16 +1,33 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useCallback, useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import { AddBox, DeleteForever, Search } from '@material-ui/icons';
 import { Box, Grid, IconButton, Modal, Typography } from '@mui/material';
 
 import { Header } from '../../../components';
 import { useAuth } from '../../../hooks/useAuth';
+import useProfile, { MyUser } from '../../../hooks/useProfile';
+import { dataCadastro } from '../Home/Home';
 import * as C from './styles';
 
 function SingleUser() {
   const { logout } = useAuth();
+  const { getSingleUser } = useProfile();
   const navigate = useNavigate();
+
+  const [user, setUser] = useState<MyUser>();
+
+  const { id } = useParams();
+
+  const loadUser = useCallback(async () => {
+    const getUser = await getSingleUser(id);
+    setUser(getUser);
+  }, [id, getSingleUser]);
+
+  useEffect(() => {
+    loadUser();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const [open, setOpen] = useState(false);
 
@@ -118,17 +135,23 @@ function SingleUser() {
                 <Box textAlign="left" width="50%">
                   <C.Title>
                     Usuário
-                    <C.Content>Administrador</C.Content>
+                    <C.Content>
+                      {user?.role === 'admin'
+                        ? 'Administrador'
+                        : 'Usuário comum' ?? 'Carregando...'}
+                    </C.Content>
                   </C.Title>
 
                   <C.Subtitle>Cargo/Função:</C.Subtitle>
-                  <C.Content>Professor</C.Content>
+                  <C.Content>
+                    {user?.disciplinaOUcargo ?? 'Carregando...'}
+                  </C.Content>
 
                   <C.Subtitle>Ingresso:</C.Subtitle>
-                  <C.Content>DD/MM/AAAA</C.Content>
+                  <C.Content>{dataCadastro(user?.createdAt)}</C.Content>
 
                   <C.Subtitle>Nome:</C.Subtitle>
-                  <C.Content>Ciclano Fulano Beltrano</C.Content>
+                  <C.Content>{user?.name ?? 'Carregando...'}</C.Content>
                 </Box>
                 <Box
                   bgcolor="#d9d9d9"
