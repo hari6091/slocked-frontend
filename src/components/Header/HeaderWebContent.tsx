@@ -6,7 +6,7 @@ import { Link } from './styles';
 
 function HeaderWebContent() {
   return (
-    <Box display="flex" justifyContent="space-between" width="75%">
+    <Box display="flex" justifyContent="space-around" width="75%">
       <Link data-testid="home" href="/home" underline="none" color="#fff">
         Home
       </Link>
