@@ -21,9 +21,6 @@ function HeaderWebContent() {
       <Link itemID="contatos" href="/trancas" underline="none" color="#fff">
         Trancas
       </Link>
-      <Link itemID="contatos" href="/logs" underline="none" color="#fff">
-        Logs
-      </Link>
     </Box>
   );
 }

@@ -1,12 +1,6 @@
 import React, { useState } from 'react';
 
-import {
-  Home,
-  Lock,
-  ExitToApp,
-  NotificationImportant,
-  People,
-} from '@material-ui/icons';
+import { Home, Lock, ExitToApp, People } from '@material-ui/icons';
 import MenuIcon from '@mui/icons-material/Menu';
 import { Box, IconButton, Popover } from '@mui/material';
 
@@ -85,17 +79,6 @@ function HeaderMobileContent({ onClick }: { onClick?: () => void }) {
               color="#000"
             >
               Trancas
-            </LinkMobile>
-          </Box>
-          <Box display="flex" flexDirection="row" gap={1}>
-            <NotificationImportant />
-            <LinkMobile
-              data-testid="contatos-popover"
-              href="/logs"
-              underline="none"
-              color="#000"
-            >
-              Logs
             </LinkMobile>
           </Box>
           <Box display="flex" flexDirection="row" gap={1}>
