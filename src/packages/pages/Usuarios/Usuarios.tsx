@@ -16,10 +16,21 @@ function Usuarios() {
 
   const [filter, setFilter] = useState<string>();
 
+  const lowerFilter = filter?.toLowerCase();
+
+  const usersFiltrados = filter
+    ? users?.filter(
+        (user) =>
+          user.name.toLowerCase().includes(lowerFilter ?? '') ||
+          user.email.toLowerCase().includes(lowerFilter ?? ''),
+      )
+    : users;
+
   const card = (user: MyUser) => (
     <Card
       title={`Nome: ${user.name}`}
-      subtitle={`Email: ${user.email} Acesso: ${user.role}`}
+      subtitle={`Email: ${user.email}`}
+      acesso={`Acesso: ${user.role}`}
       info={`Cargo: ${user.disciplinaOUcargo}`}
       buttonContent="Ver acessos"
       onClick={() => {
@@ -42,7 +53,7 @@ function Usuarios() {
         >
           <Box width="40%">
             <Box display="flex" flexDirection="column">
-              <C.Subtitle>Pesquisar usuário pelo nome</C.Subtitle>
+              <C.Subtitle>Pesquisar usuário pelo nome ou email</C.Subtitle>
               <Box
                 display="flex"
                 flexDirection="row"
@@ -82,17 +93,9 @@ function Usuarios() {
           flexWrap="wrap"
           justifyContent="center"
         >
-          {filter
-            ? users
-                ?.filter((user) => {
-                  return user.name === filter;
-                })
-                .map((user) => {
-                  return card(user);
-                })
-            : users?.map((user) => {
-                return card(user);
-              })}
+          {usersFiltrados?.map((user) => {
+            return card(user);
+          })}
         </Box>
       </C.CustomGrid>
     </>
