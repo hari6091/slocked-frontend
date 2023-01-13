@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { AddBox, DeleteForever, Search } from '@material-ui/icons';
@@ -8,13 +8,20 @@ import { Box, Grid, IconButton, Modal, Typography } from '@mui/material';
 import { Header } from '../../../components';
 import { useAuth } from '../../../hooks/useAuth';
 import useProfile, { MyUser, MyUserSalas } from '../../../hooks/useProfile';
+import useSalas from '../../../hooks/useSalas';
 import { dataCadastro } from '../Home/Home';
 import * as C from './styles';
 
 function SingleUser() {
   const { logout } = useAuth();
-  const { getSingleUser, deleteUser, getUserSalas, deleteUserSala } =
-    useProfile();
+  const {
+    getSingleUser,
+    deleteUser,
+    getUserSalas,
+    deleteUserSala,
+    addUserSala,
+  } = useProfile();
+  const { salas } = useSalas();
   const navigate = useNavigate();
 
   const [user, setUser] = useState<MyUser>();
@@ -50,6 +57,23 @@ function SingleUser() {
     await deleteUserSala(salaSelectedId, user?.id);
     setOpenDeleteUserSala(false);
     loadSalaUser();
+  };
+
+  const [filter, setFilter] = useState<string>();
+
+  const salasFiltradas = useMemo(() => {
+    const lowerFilter = filter?.toLowerCase();
+    return filter
+      ? salas?.filter(
+          (sala) =>
+            sala.name.toLowerCase().includes(lowerFilter ?? '') ||
+            sala.numero.toLowerCase().includes(lowerFilter ?? ''),
+        )
+      : salas;
+  }, [filter, salas]);
+
+  const handleAddUserToSala = async (salaId: string | undefined) => {
+    await addUserSala(salaId, user?.id);
   };
 
   const [open, setOpen] = useState(false);
@@ -145,11 +169,7 @@ function SingleUser() {
                       Add Tranca <AddBox style={{ fontSize: '32px' }} />
                     </Box>
                   </C.Button>
-                  <C.Button
-                    onClick={() => {
-                      setOpen(true);
-                    }}
-                  >
+                  <C.Button>
                     Add Grupo de Trancas
                     <AddBox style={{ fontSize: '32px' }} />
                   </C.Button>
@@ -242,39 +262,38 @@ function SingleUser() {
           </Typography>
           <Box display="flex" flexDirection="column">
             <Box display="flex" flexDirection="row" alignItems="center" gap={1}>
-              <C.Input />
+              <C.Input
+                onChange={(e) => {
+                  setFilter(e.target.value);
+                }}
+              />
               <C.Button>
                 <Search style={{ padding: '8px' }} />
               </C.Button>
             </Box>
           </Box>
           <Box display="flex" flexDirection="column">
-            <Box
-              display="flex"
-              justifyContent="space-around"
-              alignItems="center"
-            >
-              <Typography variant="subtitle1" component="h3">
-                Sala 123456
-              </Typography>
+            {salasFiltradas?.map((sala) => {
+              return (
+                <Box
+                  display="flex"
+                  justifyContent="space-around"
+                  alignItems="center"
+                >
+                  <Typography variant="subtitle1" component="h3">
+                    {sala.name}
+                  </Typography>
 
-              <IconButton>
-                <AddBox style={{ fontSize: '32px' }} />
-              </IconButton>
-            </Box>
-            <Box
-              display="flex"
-              justifyContent="space-around"
-              alignItems="center"
-            >
-              <Typography variant="subtitle1" component="h3">
-                Sala ABCDEF
-              </Typography>
+                  <Typography variant="subtitle1" component="h3">
+                    {sala.numero}
+                  </Typography>
 
-              <IconButton>
-                <AddBox style={{ fontSize: '32px' }} />
-              </IconButton>
-            </Box>
+                  <IconButton onClick={() => handleAddUserToSala(sala.id)}>
+                    <AddBox style={{ fontSize: '32px' }} />
+                  </IconButton>
+                </Box>
+              );
+            })}
           </Box>
         </Box>
       </Modal>

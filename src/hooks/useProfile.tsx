@@ -23,14 +23,13 @@ export interface MyUserSalas {
 
 function useProfile() {
   const [profile, setProfile] = useState<MyUser>();
-
   async function getUSer() {
     await api.get('me').then((response) => {
       setProfile(response.data);
     });
   }
-  const [users, setUsers] = useState<MyUser[]>();
 
+  const [users, setUsers] = useState<MyUser[]>();
   async function allSalas() {
     await api.get('users').then((response) => {
       setUsers(response.data);
@@ -69,6 +68,22 @@ function useProfile() {
     });
   }
 
+  async function addUserSala(
+    salaId: string | undefined,
+    userId: string | undefined,
+  ) {
+    try {
+      const request = await api.post('/salauser', {
+        salaId,
+        userId,
+      });
+
+      return request.data;
+    } catch {
+      return null;
+    }
+  }
+
   useEffect(() => {
     getUSer();
     allSalas();
@@ -83,6 +98,7 @@ function useProfile() {
     salas,
     getUserSalas,
     deleteUserSala,
+    addUserSala,
   };
 }
 

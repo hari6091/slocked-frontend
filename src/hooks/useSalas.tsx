@@ -4,6 +4,7 @@ import api from '../services/api';
 
 export interface ISala {
   uuid?: string;
+  id?: string;
   name: string;
   numero: string;
   status?: string;
