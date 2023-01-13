@@ -89,6 +89,9 @@ function Home() {
                 <Box textAlign="left" width="50%">
                   <C.Title>Meu Usuário</C.Title>
 
+                  <C.Subtitle>Nome:</C.Subtitle>
+                  <C.Content>{profile?.name}</C.Content>
+
                   <C.Subtitle>Cargo - Nível de acesso:</C.Subtitle>
                   <C.Content>
                     {profile?.disciplinaOUcargo} - {}
@@ -99,9 +102,6 @@ function Home() {
 
                   <C.Subtitle>Ingresso no sistema:</C.Subtitle>
                   <C.Content>{dataCadastro(profile?.createdAt)}</C.Content>
-
-                  <C.Subtitle>Nome:</C.Subtitle>
-                  <C.Content>{profile?.name}</C.Content>
                 </Box>
                 <Box>
                   <AccountCircleIcon

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useCallback, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
@@ -6,16 +7,19 @@ import { Box, Grid, IconButton, Modal, Typography } from '@mui/material';
 
 import { Header } from '../../../components';
 import { useAuth } from '../../../hooks/useAuth';
-import useProfile, { MyUser } from '../../../hooks/useProfile';
+import useProfile, { MyUser, MyUserSalas } from '../../../hooks/useProfile';
 import { dataCadastro } from '../Home/Home';
 import * as C from './styles';
 
 function SingleUser() {
   const { logout } = useAuth();
-  const { getSingleUser, deleteUser } = useProfile();
+  const { getSingleUser, deleteUser, getUserSalas, deleteUserSala } =
+    useProfile();
   const navigate = useNavigate();
 
   const [user, setUser] = useState<MyUser>();
+  const [salaUser, setSalaUser] = useState<MyUserSalas[]>();
+  const [salaSelectedId, setSalaSelectedId] = useState<string>();
 
   const { id } = useParams();
 
@@ -24,18 +28,33 @@ function SingleUser() {
     setUser(getUser);
   }, [id, getSingleUser]);
 
+  const loadSalaUser = useCallback(async () => {
+    const getUser = await getUserSalas(user?.id);
+    setSalaUser(getUser);
+  }, [getUserSalas, user?.id]);
+
   useEffect(() => {
     loadUser();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    loadSalaUser();
+  }, [user]);
 
   const handleDeleteUser = async () => {
     await deleteUser(id);
     navigate('/usuarios');
   };
 
+  const handleDeleteUserSala = async () => {
+    await deleteUserSala(salaSelectedId, user?.id);
+    setOpenDeleteUserSala(false);
+    loadSalaUser();
+  };
+
   const [open, setOpen] = useState(false);
-  const [openDelete, setOpenDelete] = useState(false);
+  const [openDeleteUser, setOpenDeleteUser] = useState(false);
+  const [openDeleteUserSala, setOpenDeleteUserSala] = useState(false);
 
   const style = {
     position: 'absolute' as const,
@@ -85,21 +104,32 @@ function SingleUser() {
                   <C.Subtitle>ID</C.Subtitle>
                   <C.Subtitle>Remover</C.Subtitle>
                 </Box>
-                <C.Card>
-                  <Box
-                    padding="12px"
-                    width="100%"
-                    display="flex"
-                    alignItems="center"
-                    gap={15}
-                  >
-                    <C.CardContent>C18</C.CardContent>
-                    <C.CardContent>123123123</C.CardContent>
-                    <IconButton>
-                      <DeleteForever />
-                    </IconButton>
-                  </Box>
-                </C.Card>
+                {salaUser?.map((sala) => {
+                  return (
+                    <C.Card>
+                      <Box
+                        padding="12px"
+                        width="100%"
+                        maxWidth="550px"
+                        display="flex"
+                        alignItems="center"
+                        gap={8}
+                      >
+                        <C.CardContent>{sala.name}</C.CardContent>
+                        <C.CardContent>{sala.numero}</C.CardContent>
+                        <IconButton>
+                          <DeleteForever
+                            onClick={() => {
+                              setSalaSelectedId(sala.id);
+                              setOpenDeleteUserSala(true);
+                            }}
+                          />
+                        </IconButton>
+                      </Box>
+                    </C.Card>
+                  );
+                })}
+
                 <Box
                   width="100%"
                   display="flex"
@@ -189,7 +219,7 @@ function SingleUser() {
                 <Box width="33%" display="flex" justifyContent="end">
                   <C.Button2
                     onClick={() => {
-                      setOpenDelete(true);
+                      setOpenDeleteUser(true);
                     }}
                   >
                     Deletar Usuário
@@ -249,9 +279,9 @@ function SingleUser() {
         </Box>
       </Modal>
       <Modal
-        open={openDelete}
+        open={openDeleteUser}
         onClose={() => {
-          setOpenDelete(false);
+          setOpenDeleteUser(false);
         }}
       >
         <Box sx={style}>
@@ -274,12 +304,49 @@ function SingleUser() {
           >
             <C.Button2
               onClick={() => {
-                setOpenDelete(false);
+                setOpenDeleteUser(false);
               }}
             >
               Cancelar
             </C.Button2>
             <C.Button onClick={handleDeleteUser}>Sim, quero deletar.</C.Button>
+          </Box>
+        </Box>
+      </Modal>
+
+      <Modal
+        open={openDeleteUserSala}
+        onClose={() => {
+          setOpenDeleteUserSala(false);
+        }}
+      >
+        <Box sx={style}>
+          <Typography
+            id="modal-modal-title"
+            variant="h6"
+            component="h2"
+            textAlign="center"
+          >
+            Tem certeza que quer deletar essa sala deste usuário?
+          </Typography>
+          <Box
+            display="flex"
+            flexDirection="row"
+            alignItems="center"
+            justifyContent="center"
+            gap={1}
+            mt="12px"
+          >
+            <C.Button2
+              onClick={() => {
+                setOpenDeleteUserSala(false);
+              }}
+            >
+              Cancelar
+            </C.Button2>
+            <C.Button onClick={handleDeleteUserSala}>
+              Sim, quero deletar.
+            </C.Button>
           </Box>
         </Box>
       </Modal>

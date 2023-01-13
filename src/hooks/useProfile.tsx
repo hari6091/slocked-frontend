@@ -14,6 +14,7 @@ export interface MyUser {
 
 export interface MyUserSalas {
   uuid?: string;
+  id?: string;
   name: string;
   numero: string;
   status: string;
@@ -41,8 +42,23 @@ function useProfile() {
     return request.data;
   }
 
+  async function getUserSalas(id: string | undefined): Promise<MyUserSalas[]> {
+    const request = await api.get(`salas/user/${id}`);
+    return request.data;
+  }
+
   async function deleteUser(id: string | undefined) {
     const request = await api.delete(`users/${id}`);
+    return request.data;
+  }
+
+  async function deleteUserSala(
+    salaId: string | undefined,
+    userId: string | undefined,
+  ) {
+    const request = await api.delete(`usersala/${userId}`, {
+      data: { salaId },
+    });
     return request.data;
   }
 
@@ -59,7 +75,15 @@ function useProfile() {
     userSalas();
   }, []);
 
-  return { profile, users, getSingleUser, deleteUser, salas };
+  return {
+    profile,
+    users,
+    getSingleUser,
+    deleteUser,
+    salas,
+    getUserSalas,
+    deleteUserSala,
+  };
 }
 
 export default useProfile;

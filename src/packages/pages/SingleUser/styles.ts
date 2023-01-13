@@ -36,6 +36,7 @@ export const Card = styled.div`
   border-radius: 25px;
   justify-content: space-between;
   align-items: center;
+  max-width: 550px;
 `;
 
 export const CardContent = styled.p`
