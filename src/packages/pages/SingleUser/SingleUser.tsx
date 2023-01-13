@@ -74,6 +74,7 @@ function SingleUser() {
 
   const handleAddUserToSala = async (salaId: string | undefined) => {
     await addUserSala(salaId, user?.id);
+    loadSalaUser();
   };
 
   const [open, setOpen] = useState(false);
@@ -91,6 +92,10 @@ function SingleUser() {
     boxShadow: 24,
     p: 4,
   };
+
+  const salasListadas = salaUser?.map((sala) => {
+    return sala.name;
+  });
 
   return (
     <>
@@ -273,27 +278,32 @@ function SingleUser() {
             </Box>
           </Box>
           <Box display="flex" flexDirection="column">
-            {salasFiltradas?.map((sala) => {
-              return (
-                <Box
-                  display="flex"
-                  justifyContent="space-around"
-                  alignItems="center"
-                >
-                  <Typography variant="subtitle1" component="h3">
-                    {sala.name}
-                  </Typography>
+            {salasFiltradas
+              ?.filter(
+                (salaAdicionada) =>
+                  !salasListadas?.includes(salaAdicionada.name),
+              )
+              .map((sala) => {
+                return (
+                  <Box
+                    display="flex"
+                    justifyContent="space-around"
+                    alignItems="center"
+                  >
+                    <Typography variant="subtitle1" component="h3">
+                      {sala.name}
+                    </Typography>
 
-                  <Typography variant="subtitle1" component="h3">
-                    {sala.numero}
-                  </Typography>
+                    <Typography variant="subtitle1" component="h3">
+                      {sala.numero}
+                    </Typography>
 
-                  <IconButton onClick={() => handleAddUserToSala(sala.id)}>
-                    <AddBox style={{ fontSize: '32px' }} />
-                  </IconButton>
-                </Box>
-              );
-            })}
+                    <IconButton onClick={() => handleAddUserToSala(sala.id)}>
+                      <AddBox style={{ fontSize: '32px' }} />
+                    </IconButton>
+                  </Box>
+                );
+              })}
           </Box>
         </Box>
       </Modal>
