@@ -44,6 +44,7 @@ export const CardContent = styled.p`
   font-size: 28px;
   padding-left: 12px;
   padding-right: 12px;
+  width: 80%;
 `;
 
 export const CustomBox = styled(Box)`
@@ -86,10 +87,10 @@ export const Button = styled.button`
 `;
 
 export const Button2 = styled.button`
-  width: 100%;
+  width: 30%;
   height: 48px;
   border-radius: 15px;
-  background-color: ${({ theme }) => theme.colors.Neutral0};
+  background-color: #cf0e0e;
   border: none;
   font: ${({ theme }) => theme.typography.Text};
   color: #000;

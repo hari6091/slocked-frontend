@@ -3,6 +3,7 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { AddBox, DeleteForever, Search } from '@material-ui/icons';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import { Box, Grid, IconButton, Modal, Typography } from '@mui/material';
 
 import { Header } from '../../../components';
@@ -214,12 +215,15 @@ function SingleUser() {
                       : 'Usuário comum' ?? 'Carregando...'}
                   </C.Content>
                 </Box>
-                <Box
-                  bgcolor="#d9d9d9"
-                  width="360px"
-                  height="360px"
-                  borderRadius="40px"
-                />
+                <Box>
+                  <AccountCircleIcon
+                    style={{
+                      width: '360px',
+                      height: '360px',
+                      color: '#d9d9d9',
+                    }}
+                  />
+                </Box>
               </Box>
               <Box width="100%" textAlign="center" display="flex" gap={5}>
                 <Box width="30%" textAlign="start">

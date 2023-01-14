@@ -9,6 +9,13 @@ export interface ISala {
   numero: string;
   status?: string;
   createdAt?: string;
+  users?: {
+    name: string;
+    email: string;
+    salaUser: {
+      userId: string;
+    };
+  }[];
 }
 
 function useSalas() {
@@ -44,11 +51,27 @@ function useSalas() {
     return request.data;
   }
 
+  async function deleteSalaUser(
+    salaId: string | undefined,
+    userId: string | undefined,
+  ) {
+    const request = await api.delete(`salauser/${salaId}`, {
+      data: { userId },
+    });
+    return request.data;
+  }
+
   useEffect(() => {
     allSalas();
   }, []);
 
-  return { createSala, salas, getSingleSala, deleteSala };
+  return {
+    createSala,
+    salas,
+    getSingleSala,
+    deleteSala,
+    deleteSalaUser,
+  };
 }
 
 export default useSalas;
