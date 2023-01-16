@@ -14,16 +14,17 @@ function NewLock() {
 
   const [name, setName] = useState('');
   const [numero, setNumero] = useState('');
+  const [grupo, setGrupo] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
   const handleCadastrar = async () => {
-    if (!name || !numero) {
+    if (!name || !numero || !grupo) {
       setError('Preencha todos os campos');
       return;
     }
     try {
-      await createSala({ name, numero });
+      await createSala({ name, numero, grupo });
 
       toast.success('Sala cadastrada com sucesso!', {
         position: 'top-center',
@@ -73,7 +74,12 @@ function NewLock() {
         minWidth="400px"
       >
         <C.BoxCadastro p="20px" boxShadow="0 1px 2px #0003">
-          <Box display="flex" flexDirection="row" justifyContent="start">
+          <Box
+            display="flex"
+            flexDirection="row"
+            justifyContent="start"
+            alignItems="center"
+          >
             <IconButton
               onClick={() => {
                 navigate('/trancas');
@@ -94,6 +100,12 @@ function NewLock() {
             <C.InputSala
               onChange={(e) => {
                 setNumero(e.target.value);
+              }}
+            />
+            <C.labelInput>Grupo da sala</C.labelInput>
+            <C.Input
+              onChange={(e) => {
+                setGrupo(e.target.value);
               }}
             />
             <C.labelError>{error}</C.labelError>

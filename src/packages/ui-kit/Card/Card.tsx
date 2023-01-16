@@ -9,6 +9,7 @@ export interface CardProps {
   subtitle?: string;
   acesso?: string;
   info?: string;
+  grupo?: string;
   buttonContent?: string;
   onClick?: () => void;
 }
@@ -18,6 +19,7 @@ function Card({
   subtitle,
   acesso,
   info,
+  grupo,
   buttonContent,
   onClick,
 }: CardProps) {
@@ -27,6 +29,7 @@ function Card({
     <Styled.Card data-testid="Card">
       <Styled.Title>{title}</Styled.Title>
       <Styled.Title>{subtitle}</Styled.Title>
+      <Styled.Title>{grupo}</Styled.Title>
       {isPorta ? (
         <Box
           width="50%"

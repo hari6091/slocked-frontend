@@ -8,6 +8,7 @@ export interface ISala {
   name: string;
   numero: string;
   status?: string;
+  grupo: string;
   createdAt?: string;
   users?: {
     name: string;
@@ -19,17 +20,18 @@ export interface ISala {
 }
 
 function useSalas() {
-  async function createSala({ name, numero }: ISala) {
+  async function createSala({ name, numero, grupo }: ISala) {
     try {
       const request = await api.post('/salas', {
         name,
         numero,
         status: 'inativo',
+        grupo,
       });
 
       return request.data;
-    } catch {
-      return null;
+    } catch (e) {
+      return e;
     }
   }
 
