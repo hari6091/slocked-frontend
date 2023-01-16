@@ -25,9 +25,16 @@ function SingleUser() {
   const { salas } = useSalas();
   const navigate = useNavigate();
 
+  const [filter, setFilter] = useState<string>();
+
   const [user, setUser] = useState<MyUser>();
   const [salaUser, setSalaUser] = useState<MyUserSalas[]>();
   const [salaSelectedId, setSalaSelectedId] = useState<string>();
+
+  const [open, setOpen] = useState(false);
+  const [grupoOpen, setGrupoOpen] = useState(false);
+  const [openDeleteUser, setOpenDeleteUser] = useState(false);
+  const [openDeleteUserSala, setOpenDeleteUserSala] = useState(false);
 
   const { id } = useParams();
 
@@ -60,8 +67,6 @@ function SingleUser() {
     loadSalaUser();
   };
 
-  const [filter, setFilter] = useState<string>();
-
   const salasFiltradas = useMemo(() => {
     const lowerFilter = filter?.toLowerCase();
     return filter
@@ -78,10 +83,6 @@ function SingleUser() {
     loadSalaUser();
   };
 
-  const [open, setOpen] = useState(false);
-  const [openDeleteUser, setOpenDeleteUser] = useState(false);
-  const [openDeleteUserSala, setOpenDeleteUserSala] = useState(false);
-
   const style = {
     position: 'absolute' as const,
     top: '50%',
@@ -97,6 +98,28 @@ function SingleUser() {
   const salasListadas = salaUser?.map((sala) => {
     return sala.name;
   });
+
+  const setGroup = new Set();
+
+  const deduplicateGroups = salas?.filter((sala) => {
+    const duplicatedGroup = setGroup.has(sala.grupo);
+    setGroup.add(sala.grupo);
+    return !duplicatedGroup;
+  });
+
+  const filterGroups = useMemo(() => {
+    const lowerFilter = filter?.toLowerCase();
+    return filter
+      ? deduplicateGroups?.filter((sala) =>
+          sala.grupo.toLowerCase().includes(lowerFilter ?? ''),
+        )
+      : deduplicateGroups;
+  }, [filter, deduplicateGroups]);
+
+  const handleAddGroupUserToSala = async (grupo: string | undefined) => {
+    // await addUserSalaGroup(grupo, user?.id);
+    loadSalaUser();
+  };
 
   return (
     <>
@@ -123,6 +146,30 @@ function SingleUser() {
             >
               <C.Title>Trancas:</C.Title>
               <Box
+                width="100%"
+                display="flex"
+                justifyContent="space-around"
+                gap={5}
+              >
+                <C.Button
+                  onClick={() => {
+                    setOpen(true);
+                  }}
+                >
+                  <Box display="flex" alignItems="center" gap={2}>
+                    Add Tranca <AddBox style={{ fontSize: '32px' }} />
+                  </Box>
+                </C.Button>
+                <C.Button
+                  onClick={() => {
+                    setGrupoOpen(true);
+                  }}
+                >
+                  Add Grupo de Trancas
+                  <AddBox style={{ fontSize: '32px' }} />
+                </C.Button>
+              </Box>
+              <Box
                 display="flex"
                 flexDirection="column"
                 width="100%"
@@ -145,41 +192,26 @@ function SingleUser() {
                         alignItems="center"
                         gap={8}
                       >
-                        <C.CardContent>{sala.name}</C.CardContent>
-                        <C.CardContent>{sala.numero}</C.CardContent>
-                        <IconButton>
-                          <DeleteForever
+                        <Box width="40%">
+                          <C.CardContent>{sala.name}</C.CardContent>
+                        </Box>
+                        <Box width="40%">
+                          <C.CardContent>{sala.numero}</C.CardContent>
+                        </Box>
+                        <Box>
+                          <IconButton
                             onClick={() => {
                               setSalaSelectedId(sala.id);
                               setOpenDeleteUserSala(true);
                             }}
-                          />
-                        </IconButton>
+                          >
+                            <DeleteForever />
+                          </IconButton>
+                        </Box>
                       </Box>
                     </C.Card>
                   );
                 })}
-
-                <Box
-                  width="100%"
-                  display="flex"
-                  justifyContent="space-around"
-                  gap={5}
-                >
-                  <C.Button
-                    onClick={() => {
-                      setOpen(true);
-                    }}
-                  >
-                    <Box display="flex" alignItems="center" gap={2}>
-                      Add Tranca <AddBox style={{ fontSize: '32px' }} />
-                    </Box>
-                  </C.Button>
-                  <C.Button>
-                    Add Grupo de Trancas
-                    <AddBox style={{ fontSize: '32px' }} />
-                  </C.Button>
-                </Box>
               </Box>
             </Box>
           </C.CustomBox2>
@@ -259,6 +291,7 @@ function SingleUser() {
           </Grid>
         </Grid>
       </Grid>
+
       <Modal
         open={open}
         onClose={() => {
@@ -294,23 +327,82 @@ function SingleUser() {
                     justifyContent="space-around"
                     alignItems="center"
                   >
-                    <Typography variant="subtitle1" component="h3">
-                      {sala.name}
-                    </Typography>
-
-                    <Typography variant="subtitle1" component="h3">
-                      {sala.numero}
-                    </Typography>
-
-                    <IconButton onClick={() => handleAddUserToSala(sala.id)}>
-                      <AddBox style={{ fontSize: '32px' }} />
-                    </IconButton>
+                    <Box width="40%">
+                      <Typography variant="subtitle1" component="h3">
+                        {sala.name}
+                      </Typography>
+                    </Box>
+                    <Box width="40%">
+                      <Typography variant="subtitle1" component="h3">
+                        {sala.numero}
+                      </Typography>
+                    </Box>
+                    <Box>
+                      <IconButton onClick={() => handleAddUserToSala(sala.id)}>
+                        <AddBox style={{ fontSize: '32px' }} />
+                      </IconButton>
+                    </Box>
                   </Box>
                 );
               })}
           </Box>
         </Box>
       </Modal>
+
+      <Modal
+        open={grupoOpen}
+        onClose={() => {
+          setGrupoOpen(false);
+        }}
+      >
+        <Box sx={style}>
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+            Buscar Grupo de Salas:
+          </Typography>
+          <Box display="flex" flexDirection="column">
+            <Box display="flex" flexDirection="row" alignItems="center" gap={1}>
+              <C.Input
+                onChange={(e) => {
+                  setFilter(e.target.value);
+                }}
+              />
+              <C.Button>
+                <Search style={{ padding: '8px' }} />
+              </C.Button>
+            </Box>
+          </Box>
+          <Box display="flex" flexDirection="column">
+            {filterGroups
+              ?.filter(
+                (salaAdicionada) =>
+                  !salasListadas?.includes(salaAdicionada.name),
+              )
+              ?.map((sala) => {
+                return (
+                  <Box
+                    display="flex"
+                    justifyContent="space-around"
+                    alignItems="center"
+                  >
+                    <Box width="80%">
+                      <Typography variant="subtitle1" component="h3">
+                        {sala.grupo}
+                      </Typography>
+                    </Box>
+                    <Box>
+                      <IconButton
+                        onClick={() => handleAddGroupUserToSala(sala.grupo)}
+                      >
+                        <AddBox style={{ fontSize: '32px' }} />
+                      </IconButton>
+                    </Box>
+                  </Box>
+                );
+              })}
+          </Box>
+        </Box>
+      </Modal>
+
       <Modal
         open={openDeleteUser}
         onClose={() => {
