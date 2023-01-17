@@ -256,26 +256,22 @@ function SingleUser() {
                   />
                 </Box>
               </Box>
-              <Box width="100%" textAlign="center" display="flex" gap={5}>
-                <Box width="30%" textAlign="start">
-                  <C.Button2
-                    onClick={() => {
-                      navigate('/perfil');
-                    }}
-                  >
-                    Editar Perfil
-                  </C.Button2>
-                </Box>
-                <Box width="30%" textAlign="start">
+              <Box
+                width="100%"
+                textAlign="center"
+                display="flex"
+                justifyContent="space-around"
+              >
+                <Box width="60%" textAlign="start">
                   <C.Button
                     onClick={() => {
                       navigate(`/editUser/${user?.uuid}`);
                     }}
                   >
-                    Editar
+                    Editar Perfil
                   </C.Button>
                 </Box>
-                <Box width="33%" display="flex" justifyContent="end">
+                <Box width="20%" display="flex" justifyContent="end">
                   <C.Button2
                     onClick={() => {
                       setOpenDeleteUser(true);
@@ -424,17 +420,21 @@ function SingleUser() {
             flexDirection="row"
             alignItems="center"
             justifyContent="center"
-            gap={1}
+            gap={5}
             mt="12px"
           >
-            <C.Button2
+            <C.Button
               onClick={() => {
                 setOpenDeleteUser(false);
               }}
             >
               Cancelar
-            </C.Button2>
-            <C.Button onClick={handleDeleteUser}>Sim, quero deletar.</C.Button>
+            </C.Button>
+            <Box width="30%">
+              <C.Button2 onClick={handleDeleteUser}>
+                Sim, quero deletar.
+              </C.Button2>
+            </Box>
           </Box>
         </Box>
       </Modal>

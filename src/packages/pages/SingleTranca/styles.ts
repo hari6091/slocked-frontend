@@ -93,7 +93,7 @@ export const Button2 = styled.button`
   background-color: #cf0e0e;
   border: none;
   font: ${({ theme }) => theme.typography.Text};
-  color: #000;
+  color: #fff;
   cursor: pointer;
   :hover {
     filter: brightness(90%);
