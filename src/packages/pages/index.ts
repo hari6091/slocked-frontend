@@ -1,3 +1,4 @@
+export * from './EditLock';
 export * from './EditUser';
 export * from './Home';
 export * from './Signin';

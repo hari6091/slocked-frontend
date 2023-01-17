@@ -91,7 +91,7 @@ function Trancas() {
               <Card
                 key={sala.id}
                 title={sala.name}
-                subtitle={`Número: ${sala.numero}`}
+                subtitle={`Número: ${sala.numero.toUpperCase()}`}
                 acesso={sala.status?.toUpperCase()}
                 grupo={`Grupo: ${sala.grupo}`}
                 buttonContent="Ver usuários com acesso"

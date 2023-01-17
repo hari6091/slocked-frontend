@@ -166,14 +166,19 @@ function SingleTranca() {
                 <Box textAlign="left" width="70%">
                   <C.Title>Informações:</C.Title>
 
-                  <C.Subtitle>Cadastrada no sistema em:</C.Subtitle>
-                  <C.Content>{dataCadastro(sala?.createdAt)}</C.Content>
+                  <C.Subtitle>Id - Grupo</C.Subtitle>
+                  <C.Content>
+                    {sala?.numero} - {sala?.grupo}
+                  </C.Content>
 
                   <C.Subtitle>Status:</C.Subtitle>
-                  <C.Content>{sala?.status}</C.Content>
+                  <C.Content>{sala?.status?.toUpperCase()}</C.Content>
 
                   <C.Subtitle>Usuários com acesso:</C.Subtitle>
                   <C.Content>{sala?.users?.length} funcionários</C.Content>
+
+                  <C.Subtitle>Cadastrada no sistema em:</C.Subtitle>
+                  <C.Content>{dataCadastro(sala?.createdAt)}</C.Content>
                 </Box>
               </Box>
               <Box
@@ -182,12 +187,17 @@ function SingleTranca() {
                 display="flex"
                 justifyContent="center"
               >
-                <Box width="50%" textAlign="start">
+                <Box width="70%" alignItems="center" display="flex" gap={5}>
                   <C.Button onClick={() => setOpen(true)}>
                     Adicionar Usuário <AddBox style={{ fontSize: '32px' }} />
                   </C.Button>
+
+                  <C.Button onClick={() => navigate(`/editSala/${id}`)}>
+                    Editar
+                  </C.Button>
                 </Box>
-                <Box width="33%" textAlign="end">
+
+                <Box width="30%" textAlign="end">
                   <C.Button2
                     onClick={() => {
                       setOpenDelete(true);
@@ -238,7 +248,7 @@ function SingleTranca() {
                     </Typography>
 
                     <Typography variant="subtitle1" component="h3" width="45%">
-                      {user.disciplinaOUcargo}{' '}
+                      {user.disciplinaOUcargo}
                     </Typography>
 
                     <IconButton onClick={() => handleAddSalaToUser(user.id)}>

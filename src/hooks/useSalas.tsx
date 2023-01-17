@@ -19,10 +19,32 @@ export interface ISala {
   }[];
 }
 
+export interface ISalaEdit {
+  uuid: string | undefined;
+  name: string | undefined;
+  numero: string | undefined;
+  grupo: string | undefined;
+}
+
 function useSalas() {
   async function createSala({ name, numero, grupo }: ISala) {
     try {
       const request = await api.post('/salas', {
+        name,
+        numero,
+        status: 'inativo',
+        grupo,
+      });
+
+      return request.data;
+    } catch (e) {
+      return e;
+    }
+  }
+
+  async function editSala({ uuid, name, numero, grupo }: ISalaEdit) {
+    try {
+      const request = await api.patch(`/salas/${uuid}`, {
         name,
         numero,
         status: 'inativo',
@@ -73,6 +95,7 @@ function useSalas() {
     getSingleSala,
     deleteSala,
     deleteSalaUser,
+    editSala,
   };
 }
 
