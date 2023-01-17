@@ -25,3 +25,15 @@ export type IUserCadastro = {
   confPassword: string;
   role: string;
 };
+
+export type IUserUpdate = {
+  id?: string | undefined;
+  name: string | undefined;
+  tags: string | undefined;
+  matricula: string | undefined;
+  disciplinaOUcargo: string | undefined;
+  email: string | undefined;
+  password: string;
+  confPassword: string;
+  role: string | undefined;
+};

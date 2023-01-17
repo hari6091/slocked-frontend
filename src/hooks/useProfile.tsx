@@ -1,11 +1,15 @@
 import { useEffect, useState } from 'react';
 
+import { IUserUpdate } from '../contexts/AuthProvider/types';
+import { updateUserRequest } from '../contexts/AuthProvider/utils';
 import api from '../services/api';
 
 export interface MyUser {
   uuid?: string;
   id?: string;
   name: string;
+  tags: string;
+  matricula: string;
   email: string;
   disciplinaOUcargo: string;
   role: string;
@@ -100,6 +104,32 @@ function useProfile() {
     }
   }
 
+  const updateUser = async ({
+    id,
+    name,
+    tags,
+    matricula,
+    disciplinaOUcargo,
+    email,
+    password,
+    confPassword,
+    role,
+  }: IUserUpdate) => {
+    const response = await updateUserRequest({
+      id,
+      name,
+      tags,
+      matricula,
+      disciplinaOUcargo,
+      email,
+      password,
+      confPassword,
+      role,
+    });
+
+    return response.data;
+  };
+
   useEffect(() => {
     getUSer();
     allSalas();
@@ -116,6 +146,7 @@ function useProfile() {
     deleteUserSala,
     addUserSala,
     addUserSalaGroup,
+    updateUser,
   };
 }
 

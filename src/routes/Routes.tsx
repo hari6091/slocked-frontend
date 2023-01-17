@@ -14,6 +14,7 @@ import {
   SingleUser,
   Usuarios,
   SingleTranca,
+  EditUser,
 } from '../packages/pages';
 
 function RoutesApp() {
@@ -85,6 +86,16 @@ function RoutesApp() {
             <ProtectedAdminLayout>
               <ProtectedLayout>
                 <NewLock />
+              </ProtectedLayout>
+            </ProtectedAdminLayout>
+          }
+        />
+        <Route
+          path="/editUser/:id"
+          element={
+            <ProtectedAdminLayout>
+              <ProtectedLayout>
+                <EditUser />
               </ProtectedLayout>
             </ProtectedAdminLayout>
           }

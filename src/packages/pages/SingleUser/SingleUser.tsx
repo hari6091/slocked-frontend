@@ -7,14 +7,12 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import { Box, Grid, IconButton, Modal, Typography } from '@mui/material';
 
 import { Header } from '../../../components';
-import { useAuth } from '../../../hooks/useAuth';
 import useProfile, { MyUser, MyUserSalas } from '../../../hooks/useProfile';
 import useSalas from '../../../hooks/useSalas';
 import { dataCadastro } from '../Home/Home';
 import * as C from './styles';
 
 function SingleUser() {
-  const { logout } = useAuth();
   const {
     getSingleUser,
     deleteUser,
@@ -271,11 +269,10 @@ function SingleUser() {
                 <Box width="30%" textAlign="start">
                   <C.Button
                     onClick={() => {
-                      logout();
-                      navigate('/');
+                      navigate(`/editUser/${user?.uuid}`);
                     }}
                   >
-                    Sair
+                    Editar
                   </C.Button>
                 </Box>
                 <Box width="33%" display="flex" justifyContent="end">

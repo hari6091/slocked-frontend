@@ -89,6 +89,7 @@ function Trancas() {
           {salasFiltradas?.map((sala) => {
             return (
               <Card
+                key={sala.id}
                 title={sala.name}
                 subtitle={`Número: ${sala.numero}`}
                 acesso={sala.status?.toUpperCase()}

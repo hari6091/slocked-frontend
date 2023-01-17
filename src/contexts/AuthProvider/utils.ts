@@ -1,5 +1,5 @@
 import api from '../../services/api';
-import { IUser, IUserCadastro } from './types';
+import { IUser, IUserCadastro, IUserUpdate } from './types';
 
 // Salva o usuario no BD local
 export function setUserLocalStorage(user: IUser | null) {
@@ -51,6 +51,35 @@ export async function SignupRequest({
 }: IUserCadastro) {
   try {
     const request = await api.post('/users', {
+      name,
+      tags,
+      matricula,
+      disciplinaOUcargo,
+      email,
+      password,
+      confPassword,
+      role,
+    });
+
+    return request.data;
+  } catch {
+    return null;
+  }
+}
+
+export async function updateUserRequest({
+  id,
+  name,
+  tags,
+  matricula,
+  disciplinaOUcargo,
+  email,
+  password,
+  confPassword,
+  role,
+}: IUserUpdate) {
+  try {
+    const request = await api.patch(`/users/${id}`, {
       name,
       tags,
       matricula,

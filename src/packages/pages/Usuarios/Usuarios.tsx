@@ -29,6 +29,7 @@ function Usuarios() {
 
   const card = (user: MyUser) => (
     <Card
+      key={user.id}
       title={`Nome: ${user.name}`}
       subtitle={`Email: ${user.email}`}
       acesso={`Acesso: ${user.role}`}
