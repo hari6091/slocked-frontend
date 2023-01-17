@@ -84,6 +84,22 @@ function useProfile() {
     }
   }
 
+  async function addUserSalaGroup(
+    grupo: string | undefined,
+    userId: string | undefined,
+  ) {
+    try {
+      const request = await api.post('/salauser/group', {
+        grupo,
+        userId,
+      });
+
+      return request.data;
+    } catch {
+      return null;
+    }
+  }
+
   useEffect(() => {
     getUSer();
     allSalas();
@@ -99,6 +115,7 @@ function useProfile() {
     getUserSalas,
     deleteUserSala,
     addUserSala,
+    addUserSalaGroup,
   };
 }
 

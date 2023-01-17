@@ -21,6 +21,7 @@ function SingleUser() {
     getUserSalas,
     deleteUserSala,
     addUserSala,
+    addUserSalaGroup,
   } = useProfile();
   const { salas } = useSalas();
   const navigate = useNavigate();
@@ -117,7 +118,7 @@ function SingleUser() {
   }, [filter, deduplicateGroups]);
 
   const handleAddGroupUserToSala = async (grupo: string | undefined) => {
-    // await addUserSalaGroup(grupo, user?.id);
+    await addUserSalaGroup(grupo, user?.id);
     loadSalaUser();
   };
 
@@ -183,7 +184,7 @@ function SingleUser() {
                 </Box>
                 {salaUser?.map((sala) => {
                   return (
-                    <C.Card>
+                    <C.Card key={sala.name}>
                       <Box
                         padding="12px"
                         width="100%"
@@ -326,6 +327,7 @@ function SingleUser() {
                     display="flex"
                     justifyContent="space-around"
                     alignItems="center"
+                    key={sala.id}
                   >
                     <Box width="40%">
                       <Typography variant="subtitle1" component="h3">
@@ -383,6 +385,7 @@ function SingleUser() {
                     display="flex"
                     justifyContent="space-around"
                     alignItems="center"
+                    key={sala.uuid}
                   >
                     <Box width="80%">
                       <Typography variant="subtitle1" component="h3">
