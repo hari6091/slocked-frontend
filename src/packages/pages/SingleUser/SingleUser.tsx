@@ -367,34 +367,29 @@ function SingleUser() {
             </Box>
           </Box>
           <Box display="flex" flexDirection="column">
-            {filterGroups
-              ?.filter(
-                (salaAdicionada) =>
-                  !salasListadas?.includes(salaAdicionada.name),
-              )
-              ?.map((sala) => {
-                return (
-                  <Box
-                    display="flex"
-                    justifyContent="space-around"
-                    alignItems="center"
-                    key={sala.uuid}
-                  >
-                    <Box width="80%">
-                      <Typography variant="subtitle1" component="h3">
-                        {sala.grupo}
-                      </Typography>
-                    </Box>
-                    <Box>
-                      <IconButton
-                        onClick={() => handleAddGroupUserToSala(sala.grupo)}
-                      >
-                        <AddBox style={{ fontSize: '32px' }} />
-                      </IconButton>
-                    </Box>
+            {filterGroups?.map((sala) => {
+              return (
+                <Box
+                  display="flex"
+                  justifyContent="space-around"
+                  alignItems="center"
+                  key={sala.uuid}
+                >
+                  <Box width="80%">
+                    <Typography variant="subtitle1" component="h3">
+                      {sala.grupo}
+                    </Typography>
                   </Box>
-                );
-              })}
+                  <Box>
+                    <IconButton
+                      onClick={() => handleAddGroupUserToSala(sala.grupo)}
+                    >
+                      <AddBox style={{ fontSize: '32px' }} />
+                    </IconButton>
+                  </Box>
+                </Box>
+              );
+            })}
           </Box>
         </Box>
       </Modal>
@@ -462,16 +457,20 @@ function SingleUser() {
             gap={1}
             mt="12px"
           >
-            <C.Button2
-              onClick={() => {
-                setOpenDeleteUserSala(false);
-              }}
-            >
-              Cancelar
-            </C.Button2>
-            <C.Button onClick={handleDeleteUserSala}>
-              Sim, quero deletar.
-            </C.Button>
+            <Box width="70%">
+              <C.Button
+                onClick={() => {
+                  setOpenDeleteUserSala(false);
+                }}
+              >
+                Cancelar
+              </C.Button>
+            </Box>
+            <Box width="30%">
+              <C.Button2 onClick={handleDeleteUserSala}>
+                Sim, quero deletar.
+              </C.Button2>
+            </Box>
           </Box>
         </Box>
       </Modal>

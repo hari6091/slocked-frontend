@@ -21,6 +21,7 @@ export interface MyUserSalas {
   id?: string;
   name: string;
   numero: string;
+  grupo: string;
   status: string;
   users: MyUser[];
 }
