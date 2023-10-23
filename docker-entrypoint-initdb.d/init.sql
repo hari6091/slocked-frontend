@@ -1,3 +1,7 @@
+CREATE ROLE pguser WITH LOGIN PASSWORD 'pgpassword';
+
+GRANT ALL PRIVILEGES ON DATABASE rfid TO pguser;
+
 INSERT INTO
     public.users (
         id,
